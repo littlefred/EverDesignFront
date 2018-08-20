@@ -1,0 +1,88 @@
+.sidenav-container {
+  height: 100vh;
+  background: white;
+}
+
+.sidenav {
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+}
+
+.selected, .selected:hover {
+  font-size: 1em;
+  background: #2da4c4;
+  color: #FAD796;
+}
+
+.noSelected:hover {
+  font-size: 1em;
+  background: #FAD796;
+}
+
+mat-toolbar {
+  height:9vh;
+  color: #FAD796;
+  background: black;
+  padding:0px;
+}
+
+.mainToolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-toolbar div, mat-toolbar mat-icon {
+  height: 4vh;
+  line-height: 4vh;
+  font-size: 2em;
+}
+
+mat-toolbar button {
+  margin: 5px;
+  height: 4vh;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  background: black;
+  color: #FAD796;
+  border: none;
+}
+
+mat-toolbar button:hover {
+  background: #FAD796;
+  color: black;
+}
+
+.mainToolbar div {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  height: 3vh;
+  line-height: 3vh;
+  display: flex;
+  justify-content: center;
+  color: #FAD796;
+  background: black;
+}
+
+footer a {
+  color: #FAD796;
+  font-size: 0.5em;
+  text-decoration: none;
+}
+
+footer a:hover {
+  background: #FAD796;
+  color: black;
+}
+
+@media screen and (min-width: 768px) {
+  .mainToolbar div {
+    display: block;
+  }
+
+}

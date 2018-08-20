@@ -1,0 +1,13 @@
+<section>
+  <article class="part1">
+    <mat-icon class="search">search</mat-icon>
+    <input matInput placeholder="Rechercher un article" aria-label="recherche d'article" [formControl]="searchItems">
+    <mat-icon class="cancel" (click)="reset()">cancel</mat-icon>
+  </article>
+  <article class="part2">
+    <button type="button" [routerLink]="'/caddy'">
+      <mat-icon aria-label="panier" class="shop">shopping_cart</mat-icon>
+      <div>mon panier</div>
+    </button>
+  </article>
+</section>

@@ -1,0 +1,75 @@
+.error {
+  text-align: center;
+}
+
+.catSection {
+  margin: 0px;
+  padding:0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3vh;
+}
+
+/* css to manage the display of card of category */
+.catCard {
+  text-align: center;
+  margin: 5px 10px;
+  overflow: hidden;
+  position: relative;
+}
+/* css to display the name of category when it's hover */
+.catCard div{
+  background: white;
+  opacity: 0;
+  height: 100%;
+  width:100%;
+  position: absolute;
+  top: 0px;
+}
+
+.catCard div:hover {
+  opacity: 0.8;
+}
+
+/* css to center the name of category verticaly */
+.catCard h2 {
+  margin: 0px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2em;
+}
+
+@media screen and (orientation: portrait) {
+  .catCard {
+    height: 30vh;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 767px) {
+  .catCard {
+    width: 45%;
+    height: 50vh;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 768px) {
+  .catCard {
+    width: 40%;
+    height: 20vh;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 800px) {
+  .catCard {
+    width: 30%;
+    height: 25vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .catCard {
+  }
+}
