@@ -6,18 +6,26 @@ mat-paginator {
   width: 100%;
 }
 
-.listItems, .detailsItem {
-  border: solid 1px black;
+.bodyItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.itemContent {
+  margin: 0px 5px 3vh 5px;
+}
+
+.listItems, .detailsItem, .itemContent{
   padding:0px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
   justify-content: space-around;
-  margin: 0px 10px 3vh 10px;
+  width: 100%;
 }
 
-.detailsItem button {
+.return {
   margin: 5px;
   height: 4vh;
   line-height: 4vh;
@@ -61,42 +69,27 @@ mat-paginator {
   text-decoration: line-through;
 }
 
-@media screen and (orientation: landscape) and (max-width: 768px) {
-  .itemCard {
-    width: 45vw;
-  }
-}
-
-@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1024px) {
-  .itemCard {
-    width: 45vw;
-  }
-
-  .itemCard img, .imageCard {
-    height: 20vh;
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width:1024px) {
-  .itemCard {
-    width: 30vw;
-  }
-
-  .itemCard img, .imageCard {
-    height: 20vh;
-  }
-}
-
-.picturesItem, .identityItem, .descriptionItem, .technicalInformationsItem {
-  border:solid 1px red;
+.picturesItem, .descriptionItem, .technicalInformationsItem, .itemResume {
   width: 100%;
   margin: 5px 0px;
+}
+
+.picturesItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.itemResume {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .quantityItem {
   border: solid 5px #2da4c4;
-  width: 100%;
-  margin: 5px 0px;
+  margin-top: 5px;
+  width: auto;
   padding: 5px;
 }
 
@@ -111,7 +104,6 @@ mat-paginator {
 }
 
 .albumItem {
-  border:solid 1px blue;
   height: 10vh;
   overflow: hidden;
   display: flex;
@@ -140,6 +132,8 @@ mat-paginator {
   flex-wrap: nowrap;
   align-items: center;
   background: #FAD796;
+  width: 100%;
+  margin-bottom: 5px;
 }
 
 .dataItem {
@@ -182,12 +176,14 @@ mat-paginator {
   background: #2da4c4;
   color: #FAD796;
   border-color: #2da4c4;
+  margin-top: 5px;
 }
 
 .disabledAdd {
   background: silver;
   color: grey;
   border-color: silver;
+  margin-top: 5px;
 }
 
 .descriptionItem, .technicalInformationsItem {
@@ -203,4 +199,57 @@ mat-paginator {
   background: white;
   margin: 0px;
   padding: 5px;
+}
+
+.caddyView {
+  border: solid 5px #2da4c4;
+  width: 30vw;
+  height: 75vh;
+  margin-top: 3vh;
+  margin-right: 10px;
+  display: none;
+}
+
+@media screen and (orientation: landscape) and (max-width: 768px) {
+  .itemCard {
+    width: 45vw;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1024px) {
+  .itemCard {
+    width: 45vw;
+  }
+
+  .itemCard img, .imageCard {
+    height: 20vh;
+  }
+
+  .picturesItem, .itemResume{
+    width: 45vw;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width:1024px) {
+  .itemCard {
+    width: 30vw;
+  }
+
+  .itemCard img, .imageCard {
+    height: 20vh;
+  }
+
+  .detailsItem {
+    width: 70vw;
+    min-height: 83vh;
+    align-content: space-around;
+  }
+
+  .picturesItem, .itemResume{
+    width: 45%;
+  }
+
+  .caddyView {
+    display: block;
+  }
 }

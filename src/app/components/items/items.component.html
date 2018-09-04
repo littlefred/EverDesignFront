@@ -1,74 +1,84 @@
 <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
-<section [ngSwitch]="getScreenItems()" class="itemContent">
-  <article *ngSwitchCase="'editionItem'">
-    edition d'article
-  </article>
 
-  <article *ngSwitchCase="'detailsItem'" class="detailsItem">
-    <button mat-raised-button type="button" (click)="back()">retour</button>
-    <div class="picturesItem">
-      <div class="mainPic">
-        <img src="../../../assets/imagesArticles/{{getItemsDetails().listImagesOfItem[0].image}}" alt="photo de l'article {{getItemsDetails().name}}">
-      </div>
-      <div *ngIf="getItemsDetails().listImagesOfItem.length>1" class="albumItem">
-        <i class="material-icons">arrow_back_ios</i>
-        <div class="albumPic" *ngFor="let img of getItemsDetails().listImagesOfItem" >
-          <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" alt="photo {{getItemsDetails().listImagesOfItem.indexOf(img)}} de l'article {{getItemsDetails().name}}">
+<div class="bodyItem">
+
+  <section [ngSwitch]="getScreenItems()" class="itemContent">
+    <article *ngSwitchCase="'editionItem'">
+      edition d'article
+    </article>
+
+    <article *ngSwitchCase="'detailsItem'" class="detailsItem">
+      <div class="picturesItem">
+        <div class="mainPic">
+          <img src="../../../assets/imagesArticles/{{getItemsDetails().listImagesOfItem[0].image}}" alt="photo de l'article {{getItemsDetails().name}}">
         </div>
-        <i class="material-icons">arrow_forward_ios</i>
+        <div *ngIf="getItemsDetails().listImagesOfItem.length>1" class="albumItem">
+          <i class="material-icons">arrow_back_ios</i>
+          <div class="albumPic" *ngFor="let img of getItemsDetails().listImagesOfItem" >
+            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" alt="photo {{getItemsDetails().listImagesOfItem.indexOf(img)}} de l'article {{getItemsDetails().name}}">
+          </div>
+          <i class="material-icons">arrow_forward_ios</i>
+        </div>
       </div>
-    </div>
-    <div class="identityItem">
-      <div class="dataItem">
-        <h1>{{getItemsDetails().name}}</h1>
-        <h6>{{getItemsDetails().reference}}</h6>
-        <mat-form-field>
-          <mat-select placeholder="coloris selectionnné(s)" [disabled]="disableSelect.value">
-            <mat-option *ngFor="let item of getOptionColors(getItemsDetails().reference)" value="item">
-              - <span *ngFor="let color of item.colors">{{color.name}} <img src="../../../assets/ImagesColors/{{color.sticker}}" width="25px"> - </span>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="itemResume">
+        <div class="identityItem">
+          <div class="dataItem">
+            <h1>{{getItemsDetails().name}}</h1>
+            <h6>{{getItemsDetails().reference}}</h6>
+            <mat-form-field>
+              <mat-select placeholder="coloris selectionnné(s)" [disabled]="disableSelect.value">
+                <mat-option *ngFor="let item of getOptionColors(getItemsDetails().reference)" value="item">
+                  - <span *ngFor="let color of item.colors">{{color.name}} <img src="../../../assets/ImagesColors/{{color.sticker}}" width="25px"> - </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="itemPrice">
+            <h3 *ngIf="getItemsDetails().discountPrice===0">{{getItemsDetails().price}}€</h3>
+            <h3 *ngIf="getItemsDetails().discountPrice!==0">{{getItemsDetails().discountPrice}}€ au lieu de <span class="price">{{getItemsDetails().price}}€</span></h3>
+          </div>
+        </div>
+        <div class="quantityItem">
+          <p>Actuellement en stock : {{getStockItem()}}</p>
+          <p>
+            vous souhaitez <input #quantity mat-input type="number" min="1" max="{{getStockItem()}}" [value]="1"> article(s)
+            <button mat-raised-button type="button" (click)="getStockItem() === 0 ? '' : addItem(getItemsDetails(),quantity.value)" [ngClass]="getStockItem() === 0 ? 'disabledAdd':'add'">
+              ajouter au panier
+            </button>
+          </p>
+        </div>
       </div>
-      <div class="itemPrice">
-        <h3 *ngIf="getItemsDetails().discountPrice===0">{{getItemsDetails().price}}€</h3>
-        <h3 *ngIf="getItemsDetails().discountPrice!==0">{{getItemsDetails().discountPrice}}€ au lieu de <span class="price">{{getItemsDetails().price}}€</span></h3>
+      <div class="descriptionItem">
+        <h4>Description :</h4>
+        <p>{{getItemsDetails().description}}</p>
       </div>
-    </div>
-    <div class="quantityItem">
-      <p>Actuellement en stock : {{getStockItem()}}</p>
-      <p>
-        vous souhaitez <input #quantity mat-input type="number" min="1" max="{{getStockItem()}}" [value]="1"> article(s)
-        <button mat-raised-button type="button" (click)="getStockItem() === 0 ? '' : addItem(getItemsDetails(),quantity.value)" [ngClass]="getStockItem() === 0 ? 'disabledAdd':'add'">
-          ajouter au panier
-        </button>
-      </p>
-    </div>
-    <div class="descriptionItem">
-      <h4>Description :</h4>
-      <p>{{getItemsDetails().description}}</p>
-    </div>
-    <div class="technicalInformationsItem">
+      <div class="technicalInformationsItem">
         <h4>Informations techniques :</h4>
         <p>{{getItemsDetails().informations}}</p>
       </div>
-    <button mat-raised-button type="button" (click)="back()">retour</button>
-  </article>
+      <button class="return" mat-raised-button type="button" (click)="back()">retour</button>
+    </article>
 
-  <article *ngSwitchDefault class="listItems">
-    <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="5" [showFirstLastButtons]="true" (click)="movePage(paginator)">
-    </mat-paginator>
-    <div *ngFor="let item of getPagingList()" [ngClass]="'itemCard'" (click)="selectedItem(getListItemsToDisplay().indexOf(item), $event)">
-      <div class="imageCard">
-        <img src="../../../assets/imagesArticles/{{item.listImagesOfItem[0].image}}" alt="photo de l'article {{item.name}}">
+    <article *ngSwitchDefault class="listItems">
+      <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="6" [showFirstLastButtons]="true" (click)="movePage(paginator)">
+      </mat-paginator>
+      <div *ngFor="let item of getPagingList()" [ngClass]="'itemCard'" (click)="selectedItem(getListItemsToDisplay().indexOf(item), $event)">
+        <div class="imageCard">
+          <img src="../../../assets/imagesArticles/{{item.listImagesOfItem[0].image}}" alt="photo de l'article {{item.name}}">
+        </div>
+        <div class="identityCard">
+          <h1>{{item.name}}</h1>
+          <h6>{{item.reference}}</h6>
+          <h3 *ngIf="item.discountPrice===0">{{item.price}}€</h3>
+          <h3 *ngIf="item.discountPrice!==0">{{item.discountPrice}}€ au lieu de <span class="price">{{item.price}}€</span></h3>
+        </div>
       </div>
-      <div class="identityCard">
-        <h1>{{item.name}}</h1>
-        <h6>{{item.reference}}</h6>
-        <h3 *ngIf="item.discountPrice===0">{{item.price}}€</h3>
-        <h3 *ngIf="item.discountPrice!==0">{{item.discountPrice}}€ au lieu de <span class="price">{{item.price}}€</span></h3>
-      </div>
-    </div>
-  </article>
+    </article>
 
-</section>
+  </section>
+
+  <section *ngIf="getItemsDetails() && getScreenItems() === 'detailsItem'" class="caddyView">
+    <app-caddy></app-caddy>
+  </section>
+
+</div>

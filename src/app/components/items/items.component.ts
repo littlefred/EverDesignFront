@@ -38,7 +38,7 @@ export class ItemsComponent implements OnInit {
           this.errorMessage = 'Désolé, aucun article trouvé.';
         } else {
           this.errorMessage = '';
-          this.pagingList = this.listItemsToDisplay.slice(0, Math.min(5, this.listItemsToDisplay.length));
+          this.pagingList = this.listItemsToDisplay.slice(0, Math.min(6, this.listItemsToDisplay.length));
         }
       }
     );
