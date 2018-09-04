@@ -1,0 +1,206 @@
+.error {
+  text-align: center;
+}
+
+mat-paginator {
+  width: 100%;
+}
+
+.listItems, .detailsItem {
+  border: solid 1px black;
+  padding:0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-around;
+  margin: 0px 10px 3vh 10px;
+}
+
+.detailsItem button {
+  margin: 5px;
+  height: 4vh;
+  line-height: 4vh;
+}
+
+.itemCard {
+  background: #2da4c4;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.imageCard {
+  height: 30vh;
+  width: auto;
+  overflow: hidden;
+  text-align: center;
+  margin: 5px;
+}
+
+.itemCard img {
+  height: 30vh;
+}
+
+.identityCard {
+  background: #FAD796;
+  margin: 5px;
+  padding: 5px;
+}
+
+.identityCard h1, .identityCard h3, .identityCard h6 {
+  margin: 0px;
+}
+
+.identityCard h1, .identityCard h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  text-decoration: line-through;
+}
+
+@media screen and (orientation: landscape) and (max-width: 768px) {
+  .itemCard {
+    width: 45vw;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1024px) {
+  .itemCard {
+    width: 45vw;
+  }
+
+  .itemCard img, .imageCard {
+    height: 20vh;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width:1024px) {
+  .itemCard {
+    width: 30vw;
+  }
+
+  .itemCard img, .imageCard {
+    height: 20vh;
+  }
+}
+
+.picturesItem, .identityItem, .descriptionItem, .technicalInformationsItem {
+  border:solid 1px red;
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.quantityItem {
+  border: solid 5px #2da4c4;
+  width: 100%;
+  margin: 5px 0px;
+  padding: 5px;
+}
+
+.mainPic {
+  height: 25vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+.mainPic img {
+  height: 25vh;
+}
+
+.albumItem {
+  border:solid 1px blue;
+  height: 10vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.albumPic {
+  width: 15vw;
+  height: 9vh;
+  display: flex;
+  align-items: center;
+
+}
+
+.albumPic img {
+  width: 100%;
+  box-shadow: 1px 1px 6px 1px;
+}
+
+.identityItem {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  background: #FAD796;
+}
+
+.dataItem {
+  margin: 5px;
+  width: 70%;
+}
+
+.dataItem h1 {
+  margin: 0px;
+}
+
+.dataItem h6 {
+  margin: 5px 0px;
+}
+
+.dataItem mat-form-field {
+  width: 100%;
+}
+
+.dataItem mat-select {
+  background: white;
+}
+
+.dataItem mat-select:active {
+  color: black;
+}
+
+.itemPrice {
+  background: white;
+  width: 30%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.add {
+  background: #2da4c4;
+  color: #FAD796;
+  border-color: #2da4c4;
+}
+
+.disabledAdd {
+  background: silver;
+  color: grey;
+  border-color: silver;
+}
+
+.descriptionItem, .technicalInformationsItem {
+  background: #FAD796;
+  padding: 5px;
+}
+
+.descriptionItem h4, .technicalInformationsItem h4 {
+  margin: 5px 0px;
+}
+
+.descriptionItem p, .technicalInformationsItem p {
+  background: white;
+  margin: 0px;
+  padding: 5px;
+}

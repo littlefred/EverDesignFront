@@ -1,13 +1,14 @@
 <section>
   <article class="part1">
-    <mat-icon class="search">search</mat-icon>
+    <i class="material-icons search">search</i>
     <input matInput placeholder="Rechercher un article" aria-label="recherche d'article" [formControl]="searchItems">
     <mat-icon class="cancel" (click)="reset()">cancel</mat-icon>
   </article>
   <article class="part2">
     <button type="button" [routerLink]="'/caddy'">
-      <mat-icon aria-label="panier" class="shop">shopping_cart</mat-icon>
+      <i class="material-icons cancel">shopping_cart</i>
       <div>mon panier</div>
     </button>
   </article>
 </section>
+<section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>

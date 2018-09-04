@@ -1,4 +1,3 @@
-import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,7 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
-  MatInputModule, MatFormFieldModule, MatAutocompleteModule } from '@angular/material';
+  MatInputModule, MatFormFieldModule, MatAutocompleteModule, MatPaginatorModule, MatSelectModule,
+  MatOptionModule } from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,7 +43,10 @@ import { CaddyComponent } from './components/caddy/caddy.component';
     MatInputModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

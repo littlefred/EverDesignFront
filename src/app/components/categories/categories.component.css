@@ -68,8 +68,3 @@
     height: 25vh;
   }
 }
-
-@media screen and (min-width: 1024px) {
-  .catCard {
-  }
-}

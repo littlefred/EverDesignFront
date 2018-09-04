@@ -12,9 +12,9 @@
     </button>
   </mat-toolbar>
   <mat-nav-list>
-    <a mat-list-item href="#" *ngIf="router.url!='/'" [routerLink]="''" (click)="resetCategories()" class="noSelected">Accueil</a>
-    <a mat-list-item href="#" *ngFor="let cat of getCategories()" (click)="selectedCategory(cat.id, $event)" [ngClass]="cat.id===itemsServices.getCategoryIdSelected()? 'selected' : 'noSelected'">{{cat.name}}</a>
-    <a mat-list-item href="#" *ngIf="router.url!='/contact'" [routerLink]="'/contact'" class="noSelected" (click)="resetCategories()">Nous Contacter</a>
+    <a mat-list-item href="#" *ngIf="router.url!='/'" [routerLink]="''" (click)="resetCategories() ; drawer.toggle()" class="noSelected">Accueil</a>
+    <a mat-list-item href="#" *ngFor="let cat of getCategories()" (click)="selectedCategory(cat.id, $event) ; drawer.toggle()" [ngClass]="cat.id===itemsServices.getCategoryIdSelected()? 'selected' : 'noSelected'">{{cat.name}}</a>
+    <a mat-list-item href="#" *ngIf="router.url!='/contact'" [routerLink]="'/contact'" class="noSelected" (click)="resetCategories() ; drawer.toggle()">Nous Contacter</a>
   </mat-nav-list>
 </mat-sidenav>
 

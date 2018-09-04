@@ -1,6 +1,6 @@
 import { ItemsServicesService } from './../../services/items-services.service';
 import { CategoriesServicesService } from './../../services/categories-services.service';
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class MainNavComponent {
   private categories: Categories[]; // to keep the list of all categories
+
+  @Output() eventToClose = new EventEmitter();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
@@ -39,8 +41,8 @@ export class MainNavComponent {
     // method when user click on a category
     public selectedCategory(id: number, e: Event): void {
       e.preventDefault();
-      console.log({id});
       this.itemsServices.setCategoryIdSelected(id);
+      this.itemsServices.updateScreenItems('');
       this.router.navigateByUrl('/items');
     }
 

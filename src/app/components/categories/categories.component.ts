@@ -20,6 +20,8 @@ export class CategoriesComponent implements OnInit {
       this.categoriesServices.getAllCategories().subscribe(
         (categories: Categories[]) => {
           this.categories = categories;
+          console.log('=> Initial global list of categories :');
+          console.log(this.categories);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
