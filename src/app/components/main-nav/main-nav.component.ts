@@ -29,7 +29,7 @@ export class MainNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,
     private categoriesServices: CategoriesServicesService,
     public router: Router,
-    private itemsServices: ItemsServicesService, private usersServices: UsersServicesService) {
+    public itemsServices: ItemsServicesService, private usersServices: UsersServicesService) {
       // method to get all categories since categoriesServices
       this.categoriesServices.getAllCategories().subscribe(
         (categories: Categories[]) => {
