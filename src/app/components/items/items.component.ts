@@ -22,7 +22,7 @@ export class ItemsComponent implements OnInit {
   private screenItems: string;
   // attribut to save the item to display details
   private itemDetails: Items;
-  // list of item to display function of page
+  // list of item to display on function of page
   private pagingList: Items[];
   // attribut to get the stock of an item
   private stockItem: number;
@@ -71,7 +71,7 @@ export class ItemsComponent implements OnInit {
     this.screenItems = '';
   }
 
-  public movePage(e: PageEvent) {
+  public movePage(e: PageEvent): void {
     const startIndex = e.pageIndex * e.pageSize;
     const endIndex = Math.min(startIndex + e.pageSize - 1, e.length - 1);
     this.pagingList = this.listItemsToDisplay.slice(startIndex, endIndex + 1);
