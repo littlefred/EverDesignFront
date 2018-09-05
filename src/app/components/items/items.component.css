@@ -186,6 +186,11 @@ mat-paginator {
   margin-top: 5px;
 }
 
+.quantityItem input {
+  text-align: right;
+  font-size: 0.9em;
+}
+
 .descriptionItem, .technicalInformationsItem {
   background: #FAD796;
   padding: 5px;

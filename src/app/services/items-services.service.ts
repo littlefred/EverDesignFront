@@ -17,7 +17,7 @@ export class ItemsServicesService {
   private initialGlobalListItems = new Array<Items>();
   // attribut to save the selection list
   private selectedListItems = new BehaviorSubject<Items[]>(new Array<Items>());
-  // Observable to define the display of item component since navigation choice
+  // Subject to define the display of item component since navigation choice
   private screenObs = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) {

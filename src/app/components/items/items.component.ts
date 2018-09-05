@@ -1,3 +1,4 @@
+import { CaddyServicesService } from './../../services/caddy-services.service';
 import { Items } from './../../models/items';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { Component, OnInit } from '@angular/core';
@@ -26,7 +27,7 @@ export class ItemsComponent implements OnInit {
   // attribut to get the stock of an item
   private stockItem: number;
 
-  constructor(private itemsServices: ItemsServicesService) {}
+  constructor(private itemsServices: ItemsServicesService, private caddyServices: CaddyServicesService) {}
 
   ngOnInit() {
     this.errorMessage = this.itemsServices.getErrorMessage();
@@ -81,9 +82,13 @@ export class ItemsComponent implements OnInit {
     return this.listItemsToDisplay.filter(item => item.reference.includes(reference[0]));
   }
 
-  public addItem(item: Items, qty: number): void {
-    console.log({item});
-    console.log(qty);
+  public addCaddy(item: Items, qty: number): void {
+    if (qty > this.stockItem) {
+      this.errorMessage = 'Désolé il n\'y a pas suffisament de stock pour cet article';
+    } else {
+      this.errorMessage = '';
+      this.caddyServices.updateCaddy(item, qty);
+    }
   }
 
   /**********************

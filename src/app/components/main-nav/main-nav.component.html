@@ -27,12 +27,18 @@ position="end">
 <mat-toolbar>
   <button type="button" aria-label="cnxMenu" (click)="cnxMenu.toggle()">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    <div>Connexion</div>
+    <div>Compte</div>
   </button>
 </mat-toolbar>
 <mat-nav-list>
-  <a mat-list-item href="#">Link 1</a>
-  <a mat-list-item href="#">Link 2</a>
+  <a mat-list-item href="#" [routerLink]="'/caddy'" (click)="cnxMenu.toggle()">Mon panier</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="!getStatusConnexion()">Créér un compte</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="!getStatusConnexion()">Me connecter</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusConnexion()">Mon compte</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusConnexion()">Mes commandes en cours</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusConnexion()">Historique de mes commandes</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusUser() && (getStatusUser() === 5 || getStatusUser() === 6)">Gestion administrative</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusConnexion()">Deconnexion</a>
 </mat-nav-list>
 </mat-sidenav>
 
@@ -49,9 +55,9 @@ position="end">
   <button
   type="button"
   aria-label="cnxMenu"
-  (click)="cnxMenu.toggle()">
-  <mat-icon aria-label="cnxMenu" *ngIf="!cnxMenu.opened">person</mat-icon>
-  <div *ngIf="!cnxMenu.opened">Connexion</div>
+  (click)="cnxMenu.toggle()" [ngClass]="!cnxMenu.opened ? '':'invisibility'">
+  <mat-icon aria-label="cnxMenu">person</mat-icon>
+  <div>Compte</div>
 </button>
 </mat-toolbar>
 <section class="header"><app-header></app-header></section>

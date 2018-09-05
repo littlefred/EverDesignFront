@@ -1,3 +1,5 @@
+import { Positions } from './../../tools/positions.enum';
+import { UsersServicesService } from './../../services/users-services.service';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { CategoriesServicesService } from './../../services/categories-services.service';
 import { Component, Output, EventEmitter } from '@angular/core';
@@ -15,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class MainNavComponent {
   private categories: Categories[]; // to keep the list of all categories
+  private statusConnexion: boolean;
 
   @Output() eventToClose = new EventEmitter();
 
@@ -26,7 +29,7 @@ export class MainNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,
     private categoriesServices: CategoriesServicesService,
     public router: Router,
-    public itemsServices: ItemsServicesService) {
+    private itemsServices: ItemsServicesService, private usersServices: UsersServicesService) {
       // method to get all categories since categoriesServices
       this.categoriesServices.getAllCategories().subscribe(
         (categories: Categories[]) => {
@@ -35,6 +38,10 @@ export class MainNavComponent {
         (error: HttpErrorResponse) => {
           console.log(error);
         }
+      );
+      // method to follow the user connexion
+      this.usersServices.getConnexion().subscribe(
+        (value) => {this.statusConnexion = value; }
       );
     }
 
@@ -59,6 +66,14 @@ export class MainNavComponent {
 
     public getCategories(): Categories[] {
       return this.categories;
+    }
+
+    public getStatusConnexion(): boolean {
+      return this.statusConnexion;
+    }
+
+    public getStatusUser(): Positions {
+      return this.usersServices.getPositions();
     }
 
   }

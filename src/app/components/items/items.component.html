@@ -1,12 +1,16 @@
+<!-- Error message if there is one -->
 <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
 
+<!-- body of page -->
 <div class="bodyItem">
-
+  <!-- part 1 : main display of item component -->
+  <!-- SwitchCase to display the page in 3 modes -->
   <section [ngSwitch]="getScreenItems()" class="itemContent">
+    <!-- first switch : edition mode -->
     <article *ngSwitchCase="'editionItem'">
       edition d'article
     </article>
-
+    <!-- Second switch : when an item have been selected, detail item mode -->
     <article *ngSwitchCase="'detailsItem'" class="detailsItem">
       <div class="picturesItem">
         <div class="mainPic">
@@ -41,8 +45,8 @@
         <div class="quantityItem">
           <p>Actuellement en stock : {{getStockItem()}}</p>
           <p>
-            vous souhaitez <input #quantity mat-input type="number" min="1" max="{{getStockItem()}}" [value]="1"> article(s)
-            <button mat-raised-button type="button" (click)="getStockItem() === 0 ? '' : addItem(getItemsDetails(),quantity.value)" [ngClass]="getStockItem() === 0 ? 'disabledAdd':'add'">
+            vous souhaitez <input #quantity type="number" [min]="getStockItem() === 0 ? 0 : 1" [max]="getStockItem()" [value]="getStockItem() === 0 ? 0 : 1" [ngClass]="getStockItem() === 0 ? 'disabledAdd':''"> article(s)
+            <button mat-raised-button type="button" (click)="getStockItem() === 0 ? '' : addCaddy(getItemsDetails(),quantity.valueAsNumber)" [ngClass]="getStockItem() === 0 ? 'disabledAdd':'add'">
               ajouter au panier
             </button>
           </p>
@@ -58,7 +62,7 @@
       </div>
       <button class="return" mat-raised-button type="button" (click)="back()">retour</button>
     </article>
-
+    <!-- third switch : when a category have been selected, to display the item list -->
     <article *ngSwitchDefault class="listItems">
       <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="6" [showFirstLastButtons]="true" (click)="movePage(paginator)">
       </mat-paginator>
@@ -74,11 +78,9 @@
         </div>
       </div>
     </article>
-
   </section>
-
+  <!-- part 2 : caddy view when the screen width > 1024px -->
   <section *ngIf="getItemsDetails() && getScreenItems() === 'detailsItem'" class="caddyView">
     <app-caddy></app-caddy>
   </section>
-
 </div>
