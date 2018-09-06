@@ -1,7 +1,15 @@
-<section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
-<section class="catSection">
-  <article *ngFor="let cat of getCategories()" class="catCard">
-    <img src="../assets/imagesCategories/{{cat.image}}" alt="photo de la rubrique {{cat.name}}" [title]="cat.name" height="100%">
-    <div (click)="selectedCategory(cat.id)"><h2>{{cat.name}}</h2></div>
-  </article>
-</section>
+<div class="pageContent">
+  <section class="catSection">
+    <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
+    <article *ngFor="let cat of getCategories()" class="catCard">
+      <div class="avatar">
+        <img src="../assets/imagesCategories/{{cat.image}}" alt="photo de la rubrique {{cat.name}}" [title]="cat.name">
+        <div class="actionButton" (click)="selectedCategory(cat.id)"><h2>{{cat.name}}</h2></div>
+      </div>
+      <h3 class="title">{{cat.name}}</h3>
+    </article>
+  </section>
+  <section class="caddyView">
+    <app-caddy></app-caddy>
+  </section>
+</div>

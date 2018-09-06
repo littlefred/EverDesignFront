@@ -62,6 +62,9 @@ position="end">
 </mat-toolbar>
 <section class="header"><app-header></app-header></section>
 <router-outlet></router-outlet>
+</mat-sidenav-content>
+</mat-sidenav-container>
+
 <footer>
   <a mat-list-item href="#" [routerLink]="'/contact'" class="" (click)="resetCategories()">Nous Contacter</a>
   &nbsp;<span>|</span>&nbsp;
@@ -69,6 +72,3 @@ position="end">
   &nbsp;<span>|</span>&nbsp;
   <a mat-list-item href="#" [routerLink]="'/informations/ML'" class="" (click)="resetCategories()">Mentions Légales</a>
 </footer>
-</mat-sidenav-content>
-</mat-sidenav-container>
-

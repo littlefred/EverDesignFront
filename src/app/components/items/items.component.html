@@ -1,8 +1,7 @@
-<!-- Error message if there is one -->
-<section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
-
 <!-- body of page -->
 <div class="bodyItem">
+  <!-- Error message if there is one -->
+  <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
   <!-- part 1 : main display of item component -->
   <!-- SwitchCase to display the page in 3 modes -->
   <section [ngSwitch]="getScreenItems()" class="itemContent">
@@ -64,7 +63,8 @@
     </article>
     <!-- third switch : when a category have been selected, to display the item list -->
     <article *ngSwitchDefault class="listItems">
-      <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="6" [showFirstLastButtons]="true" (click)="movePage(paginator)">
+      <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="6" *ngIf="getPagingList().length>0"
+        [showFirstLastButtons]="true" (click)="movePage(paginator)">
       </mat-paginator>
       <div *ngFor="let item of getPagingList()" [ngClass]="'itemCard'" (click)="selectedItem(getListItemsToDisplay().indexOf(item), $event)">
         <div class="imageCard">
@@ -79,8 +79,8 @@
       </div>
     </article>
   </section>
-  <!-- part 2 : caddy view when the screen width > 1024px -->
-  <section *ngIf="getItemsDetails() && getScreenItems() === 'detailsItem'" class="caddyView">
+  <!-- part 2 : caddy view when the screen width >= 1024px -->
+  <section class="caddyView">
     <app-caddy></app-caddy>
   </section>
 </div>

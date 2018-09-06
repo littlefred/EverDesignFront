@@ -1,5 +1,5 @@
-.sidenav-container {
-  height: 100vh;
+.sidenav-container, mat-sidenav-content {
+  height: 95vh;
   background: white;
 }
 
@@ -54,6 +54,7 @@ mat-toolbar button:hover {
 
 .mainToolbar div {
   display: none;
+  margin-right: 10px;
 }
 
 .invisibility {
@@ -65,8 +66,8 @@ footer {
   position: fixed;
   bottom: 0px;
   width: 100%;
-  height: 3vh;
-  line-height: 3vh;
+  height: 5vh;
+  line-height: 5vh;
   display: flex;
   justify-content: center;
   color: #FAD796;
@@ -90,4 +91,3 @@ footer a:hover {
   }
 
 }
-

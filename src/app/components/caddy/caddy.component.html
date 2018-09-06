@@ -1,3 +1,10 @@
-<p>
-  caddy works!
-</p>
+<!-- Part 1 : to manage the display of order in progress -->
+<section>
+  <p *ngIf="!getOrderInProgress()" style="text-align:center;">Actuellement vous n'avez pas de commande en cours.</p>
+</section>
+<!-- Part 2 : to manage the display of user caddy -->
+<section>
+  <p *ngIf="!getCaddyInProgress()" style="text-align:center;">Votre panier est vide.</p>
+</section>
+<!-- Part 3 : actions buttons -->
+<section></section>

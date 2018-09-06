@@ -2,11 +2,11 @@
   <article class="part1">
     <i class="material-icons search">search</i>
     <input matInput placeholder="Rechercher un article" aria-label="recherche d'article" [formControl]="searchItems">
-    <mat-icon class="cancel" (click)="reset()">cancel</mat-icon>
+    <i class="material-icons cancel" (click)="reset()">cancel</i>
   </article>
   <article class="part2">
     <button type="button" [routerLink]="'/caddy'">
-      <i class="material-icons cancel">shopping_cart</i>
+      <i class="material-icons shop">shopping_cart</i>
       <div>mon panier</div>
     </button>
   </article>

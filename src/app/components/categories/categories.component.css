@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.pageContent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-height: 80vh;
+}
+
 .catSection {
   margin: 0px;
   padding:0px;
@@ -9,18 +16,31 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 3vh;
+  align-content: space-around;
 }
 
 /* css to manage the display of card of category */
 .catCard {
   text-align: center;
-  margin: 5px 10px;
   overflow: hidden;
   position: relative;
+  margin: 10px auto;
+  height: 30vh;
+  width: 90vw;
+  border: solid 1px white;
 }
+
+.catCard img, .avatar {
+  height: 26vh;
+}
+
+.title {
+  margin: 0px;
+}
+
 /* css to display the name of category when it's hover */
-.catCard div{
+.actionButton{
+  display: block;
   background: white;
   opacity: 0;
   height: 100%;
@@ -29,42 +49,88 @@
   top: 0px;
 }
 
-.catCard div:hover {
+.catCard:hover .actionButton{
   opacity: 0.8;
+}
+
+.catCard:hover .title {
+  opacity: 0;
 }
 
 /* css to center the name of category verticaly */
 .catCard h2 {
   margin: 0px;
+  margin-top: -2vh;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2em;
+  font-size: 1.8em;
 }
 
-@media screen and (orientation: portrait) {
-  .catCard {
-    height: 30vh;
-  }
+.caddyView {
+  border: solid 5px #2da4c4;
+  width: 30vw;
+  min-height: 77vh;
+  margin: 5px 10px;
+  display: none;
 }
 
-@media screen and (orientation: landscape) and (max-width: 767px) {
+@media screen and (orientation: landscape) {
   .catCard {
     width: 45%;
-    height: 50vh;
+    height: 40vh;
+  }
+
+  .catCard img, .avatar {
+    height: 32vh;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 768px) {
+@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1023px) {
   .catCard {
-    width: 40%;
+    width: 45%;
+    height: 24vh;
+  }
+
+  .catCard img, .avatar {
     height: 20vh;
   }
 }
 
-@media screen and (orientation: landscape) and (min-width: 800px) {
+@media screen and (orientation: landscape) and (min-width: 1024px) {
+  .catSection {
+    width: 70vw;
+  }
+
   .catCard {
-    width: 30%;
+    width: 45%;
+    height: 29vh;
+  }
+
+  .catCard img, .avatar {
     height: 25vh;
+  }
+
+  .caddyView {
+    display: block;
+  }
+}
+
+@media screen and (orientation: portrait) and (min-width: 1024px) {
+  .catSection {
+    width: 70vw;
+  }
+
+  .catCard {
+    width:45%;
+    height: 14vh;
+  }
+
+  .catCard img, .avatar {
+    height: 11vh;
+  }
+
+  .caddyView {
+    display: block;
   }
 }

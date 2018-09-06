@@ -2,18 +2,12 @@
   text-align: center;
 }
 
-mat-paginator {
-  width: 100%;
-}
-
 .bodyItem {
   display: flex;
   flex-direction: row;
   justify-content: center;
-}
-
-.itemContent {
-  margin: 0px 5px 3vh 5px;
+  align-items: flex-start;
+  min-height: 80vh;
 }
 
 .listItems, .detailsItem, .itemContent{
@@ -22,7 +16,18 @@ mat-paginator {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  width: 100%;
+  align-content: space-around;
+  margin:0px;
+}
+
+mat-paginator, .itemCard {
+  width: 90vw;
+}
+
+.itemCard {
+  background: #2da4c4;
+  overflow: hidden;
+  margin: 10px auto;
 }
 
 .return {
@@ -31,22 +36,16 @@ mat-paginator {
   line-height: 4vh;
 }
 
-.itemCard {
-  background: #2da4c4;
-  margin-top: 10px;
-  width: 100%;
-}
-
 .imageCard {
-  height: 30vh;
+  height: 19vh;
   width: auto;
   overflow: hidden;
   text-align: center;
   margin: 5px;
 }
 
-.itemCard img {
-  height: 30vh;
+.imageCard img {
+  height: 19vh;
 }
 
 .identityCard {
@@ -70,8 +69,9 @@ mat-paginator {
 }
 
 .picturesItem, .descriptionItem, .technicalInformationsItem, .itemResume {
-  width: 100%;
-  margin: 5px 0px;
+  width: 90vw;
+  overflow: hidden;
+  margin: 10px auto;
 }
 
 .picturesItem {
@@ -94,13 +94,13 @@ mat-paginator {
 }
 
 .mainPic {
-  height: 25vh;
+  height: 19vh;
   overflow: hidden;
   text-align: center;
 }
 
 .mainPic img {
-  height: 25vh;
+  height: 19vh;
 }
 
 .albumItem {
@@ -209,29 +209,28 @@ mat-paginator {
 .caddyView {
   border: solid 5px #2da4c4;
   width: 30vw;
-  height: 75vh;
-  margin-top: 3vh;
-  margin-right: 10px;
+  min-height: 77vh;
+  margin: 5px 10px;
   display: none;
 }
 
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) {
   .itemCard {
     width: 45vw;
+  }
+
+  .imageCard img, .imageCard, .mainPic, .mainPic img {
+    height: 30vh;
   }
 }
 
-@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1024px) {
-  .itemCard {
+@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1023px) {
+  .itemCard, .picturesItem, .itemResume {
     width: 45vw;
   }
 
-  .itemCard img, .imageCard {
-    height: 20vh;
-  }
-
-  .picturesItem, .itemResume{
-    width: 45vw;
+  .imageCard img, .imageCard, .mainPic, .mainPic img {
+    height: 15vh;
   }
 }
 
@@ -240,13 +239,36 @@ mat-paginator {
     width: 30vw;
   }
 
-  .itemCard img, .imageCard {
-    height: 20vh;
+  .imageCard img, .imageCard, .mainPic, .mainPic img {
+    height: 15vh;
   }
 
-  .detailsItem {
+  .detailsItem, .listItems {
     width: 70vw;
-    min-height: 83vh;
+    align-content: space-around;
+  }
+
+  .picturesItem, .itemResume{
+    width: 45%;
+  }
+
+  .caddyView {
+    display: block;
+  }
+
+}
+
+@media screen and (orientation: portrait) and (min-width: 1024px) {
+  .itemCard {
+    width: 30vw;
+  }
+
+  .itemCard img, .imageCard, .mainPic, .mainPic img  {
+    height: 10vh;
+  }
+
+  .detailsItem, .listItems {
+    width: 70vw;
     align-content: space-around;
   }
 
