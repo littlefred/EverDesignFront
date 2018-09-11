@@ -13,8 +13,6 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'informations/CGV', component: InformationsComponent},
   {path: 'informations/ML', component: InformationsComponent}
-  // {path: 'tag/:id', component: DetailsComponent},
-  // {path: 'tag/edit/:id', component: EditTagComponent}
 ];
 
 @NgModule({

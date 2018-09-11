@@ -16,8 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-nav.component.css']
 })
 export class MainNavComponent {
-  private categories: Categories[]; // to keep the list of all categories
-  private statusConnexion: boolean;
+  categories: Categories[]; // to keep the list of all categories
+  statusConnexion: boolean;
 
   @Output() eventToClose = new EventEmitter();
 
@@ -46,11 +46,11 @@ export class MainNavComponent {
     }
 
     // method when user click on a category
-    public selectedCategory(id: number, e: Event): void {
-      e.preventDefault();
+    public selectedCategory(id: number): void {
+      console.log('cat choisie => ' + id);
       this.itemsServices.setCategoryIdSelected(id);
       this.itemsServices.updateScreenItems('');
-      this.router.navigateByUrl('/items');
+      // this.router.navigateByUrl('/items');
     }
 
     // method when user go out of catalog (home or contact)
@@ -58,20 +58,7 @@ export class MainNavComponent {
       this.itemsServices.setCategoryIdSelected(-1);
     }
 
-    /**********************
-    **********************
-    * GETTERS AND SETTERS
-    **********************
-    *********************/
-
-    public getCategories(): Categories[] {
-      return this.categories;
-    }
-
-    public getStatusConnexion(): boolean {
-      return this.statusConnexion;
-    }
-
+    // method to have the user position when he's connected
     public getStatusUser(): Positions {
       return this.usersServices.getPositions();
     }

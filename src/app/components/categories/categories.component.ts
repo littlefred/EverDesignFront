@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  private errorMessage: string; // to manage error messages
-  private categories: Categories[]; // to keep the list of all categories
+  errorMessage: string; // to manage error messages
+  categories: Categories[]; // to keep the list of all categories
 
   constructor(private categoriesServices: CategoriesServicesService,
     public router: Router,
@@ -34,23 +34,8 @@ export class CategoriesComponent implements OnInit {
     }
 
     public selectedCategory(id: number): void {
-      console.log(id);
       this.itemsServices.setCategoryIdSelected(id);
       this.router.navigateByUrl('/items');
-    }
-
-    /**********************
-    **********************
-    * GETTERS AND SETTERS
-    **********************
-    *********************/
-
-    public getErrorMessage(): string {
-      return this.errorMessage;
-    }
-
-    public getCategories(): Categories[] {
-      return this.categories;
     }
 
   }

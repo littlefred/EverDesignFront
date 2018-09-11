@@ -7,7 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
   MatInputModule, MatFormFieldModule, MatAutocompleteModule, MatPaginatorModule, MatSelectModule,
-  MatOptionModule } from '@angular/material';
+  MatOptionModule,
+  MatTableModule} from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -46,7 +47,8 @@ import { CaddyComponent } from './components/caddy/caddy.component';
     MatAutocompleteModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

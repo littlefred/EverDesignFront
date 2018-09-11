@@ -19,6 +19,8 @@ export class ItemsServicesService {
   private selectedListItems = new BehaviorSubject<Items[]>(new Array<Items>());
   // Subject to define the display of item component since navigation choice
   private screenObs = new BehaviorSubject<string>('');
+  // Subject to define one item to display some details since navigation choice
+  private seeItem = new BehaviorSubject<Items>(new Items());
 
   constructor(private http: HttpClient) {
     this.getAllItems().subscribe(
@@ -85,6 +87,18 @@ export class ItemsServicesService {
 
   public getScreenObs(): Observable<string> {
     return this.screenObs;
+  }
+
+  public setScreenObs(screen: string): void {
+    this.screenObs.next(screen);
+  }
+
+  public getSeeItem(): Observable<Items> {
+    return this.seeItem;
+  }
+
+  public setSeeItem(item: Items): void {
+    this.seeItem.next(item);
   }
 
 }

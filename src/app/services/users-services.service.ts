@@ -8,7 +8,7 @@ import { Users } from '../models/users';
 })
 export class UsersServicesService {
   // Subject to follow the list of item that user want to buy
-  private userConnected = new BehaviorSubject<boolean>(false);
+  private userConnected = new BehaviorSubject<boolean>(true);
   // attribut to manage the user data when is connected
   private user = new BehaviorSubject<Users>(new Users());
 

@@ -1,6 +1,6 @@
 import { OrdersContent } from './../models/orders-content';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Items } from '../models/items';
 
 @Injectable({
@@ -25,6 +25,21 @@ export class CaddyServicesService {
       const newItemToBuy = new OrdersContent(item, qty);
       this.caddyList.getValue().push(newItemToBuy);
     }
-    console.log(this.caddyList.getValue());
   }
+
+  // method to reset the user caddy
+  public deleteCaddy(): void {
+    this.caddyList = new BehaviorSubject<OrdersContent[]>(new Array<OrdersContent>());
+  }
+
+  /**********************
+  **********************
+  * GETTERS AND SETTERS
+  **********************
+  *********************/
+
+  public getCaddyList(): Observable<OrdersContent[]> {
+    return this.caddyList;
+  }
+
 }

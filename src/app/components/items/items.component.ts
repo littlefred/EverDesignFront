@@ -1,7 +1,7 @@
 import { CaddyServicesService } from './../../services/caddy-services.service';
 import { Items } from './../../models/items';
 import { ItemsServicesService } from './../../services/items-services.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,21 +15,19 @@ export class ItemsComponent implements OnInit {
   // formControl to manage the disable action in select option
   disableSelect = new FormControl(false);
   // to manage error messages
-  private errorMessage: string;
+  errorMessage: string;
   // attribut to save the list of items selection
-  private listItemsToDisplay: Items[];
+  listItemsToDisplay: Items[];
   // attribut to manage the type of display of item(s)
-  private screenItems: string;
+  screenItems: string;
   // attribut to save the item to display details
-  private itemDetails: Items;
+  itemDetails: Items;
   // list of item to display on function of page
-  private pagingList: Items[];
+  pagingList: Items[];
   // attribut to get the stock of an item
-  private stockItem: number;
+  stockItem: number;
 
-  constructor(private itemsServices: ItemsServicesService, private caddyServices: CaddyServicesService) {}
-
-  ngOnInit() {
+  constructor(private itemsServices: ItemsServicesService, private caddyServices: CaddyServicesService) {
     this.errorMessage = this.itemsServices.getErrorMessage();
     this.itemsServices.getSelectedListItems().subscribe(
       (items: Items[]) => {
@@ -48,6 +46,14 @@ export class ItemsComponent implements OnInit {
         this.screenItems = string;
       }
     );
+    this.itemsServices.getSeeItem().subscribe(
+      (item) => {
+        this.itemDetails = item;
+      }
+    );
+  }
+
+  ngOnInit() {
   }
 
   public selectedItem(indexItem: number, e: Event): void {
@@ -89,44 +95,6 @@ export class ItemsComponent implements OnInit {
       this.errorMessage = '';
       this.caddyServices.updateCaddy(item, qty);
     }
-  }
-
-  /**********************
-  **********************
-  * GETTERS AND SETTERS
-  **********************
-  *********************/
-
-  public getListItemsToDisplay(): Items[] {
-    return this.listItemsToDisplay;
-  }
-
-  public setListItemsToDisplay(items: Items[]): void {
-    this.listItemsToDisplay = items;
-  }
-
-  public getErrorMessage(): string {
-    return this.errorMessage;
-  }
-
-  public getScreenItems(): string {
-    return this.screenItems;
-  }
-
-  public setScreenItems(s: string): void {
-    this.screenItems = s;
-  }
-
-  public getItemsDetails(): Items {
-    return this.itemDetails;
-  }
-
-  public getPagingList(): Items[] {
-    return this.pagingList;
-  }
-
-  public getStockItem(): number {
-    return this.stockItem;
   }
 
 }

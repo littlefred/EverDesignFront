@@ -1,7 +1,7 @@
 <div class="pageContent">
   <section class="catSection">
-    <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
-    <article *ngFor="let cat of getCategories()" class="catCard">
+    <section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>
+    <article *ngFor="let cat of categories" class="catCard">
       <div class="avatar">
         <img src="../assets/imagesCategories/{{cat.image}}" alt="photo de la rubrique {{cat.name}}" [title]="cat.name">
         <div class="actionButton" (click)="selectedCategory(cat.id)"><h2>{{cat.name}}</h2></div>

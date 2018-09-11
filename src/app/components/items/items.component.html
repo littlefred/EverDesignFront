@@ -1,10 +1,10 @@
+<!-- Error message if there is one -->
+<section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>
 <!-- body of page -->
 <div class="bodyItem">
-  <!-- Error message if there is one -->
-  <section *ngIf="getErrorMessage()"><h2 class="error">{{getErrorMessage()}}</h2></section>
   <!-- part 1 : main display of item component -->
   <!-- SwitchCase to display the page in 3 modes -->
-  <section [ngSwitch]="getScreenItems()" class="itemContent">
+  <section [ngSwitch]="screenItems" class="itemContent">
     <!-- first switch : edition mode -->
     <article *ngSwitchCase="'editionItem'">
       edition d'article
@@ -13,12 +13,12 @@
     <article *ngSwitchCase="'detailsItem'" class="detailsItem">
       <div class="picturesItem">
         <div class="mainPic">
-          <img src="../../../assets/imagesArticles/{{getItemsDetails().listImagesOfItem[0].image}}" alt="photo de l'article {{getItemsDetails().name}}">
+          <img src="../../../assets/imagesArticles/{{itemDetails.listImagesOfItem[0].image}}" alt="photo de l'article {{itemDetails.name}}">
         </div>
-        <div *ngIf="getItemsDetails().listImagesOfItem.length>1" class="albumItem">
+        <div *ngIf="itemDetails.listImagesOfItem.length>1" class="albumItem">
           <i class="material-icons">arrow_back_ios</i>
-          <div class="albumPic" *ngFor="let img of getItemsDetails().listImagesOfItem" >
-            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" alt="photo {{getItemsDetails().listImagesOfItem.indexOf(img)}} de l'article {{getItemsDetails().name}}">
+          <div class="albumPic" *ngFor="let img of itemDetails.listImagesOfItem" >
+            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" alt="photo {{itemDetails.listImagesOfItem.indexOf(img)}} de l'article {{itemDetails.name}}">
           </div>
           <i class="material-icons">arrow_forward_ios</i>
         </div>
@@ -26,26 +26,26 @@
       <div class="itemResume">
         <div class="identityItem">
           <div class="dataItem">
-            <h1>{{getItemsDetails().name}}</h1>
-            <h6>{{getItemsDetails().reference}}</h6>
+            <h1>{{itemDetails.name}}</h1>
+            <h6>{{itemDetails.reference}}</h6>
             <mat-form-field>
               <mat-select placeholder="coloris selectionnné(s)" [disabled]="disableSelect.value">
-                <mat-option *ngFor="let item of getOptionColors(getItemsDetails().reference)" value="item">
+                <mat-option *ngFor="let item of getOptionColors(itemDetails.reference)" value="item">
                   - <span *ngFor="let color of item.colors">{{color.name}} <img src="../../../assets/ImagesColors/{{color.sticker}}" width="25px"> - </span>
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="itemPrice">
-            <h3 *ngIf="getItemsDetails().discountPrice===0">{{getItemsDetails().price}}€</h3>
-            <h3 *ngIf="getItemsDetails().discountPrice!==0">{{getItemsDetails().discountPrice}}€ au lieu de <span class="price">{{getItemsDetails().price}}€</span></h3>
+            <h3 *ngIf="itemDetails.discountPrice===0">{{itemDetails.price}}€</h3>
+            <h3 *ngIf="itemDetails.discountPrice!==0">{{itemDetails.discountPrice}}€ au lieu de <span class="price">{{itemDetails.price}}€</span></h3>
           </div>
         </div>
         <div class="quantityItem">
-          <p>Actuellement en stock : {{getStockItem()}}</p>
+          <p>Actuellement en stock : {{stockItem}}</p>
           <p>
-            vous souhaitez <input #quantity type="number" [min]="getStockItem() === 0 ? 0 : 1" [max]="getStockItem()" [value]="getStockItem() === 0 ? 0 : 1" [ngClass]="getStockItem() === 0 ? 'disabledAdd':''"> article(s)
-            <button mat-raised-button type="button" (click)="getStockItem() === 0 ? '' : addCaddy(getItemsDetails(),quantity.valueAsNumber)" [ngClass]="getStockItem() === 0 ? 'disabledAdd':'add'">
+            vous souhaitez <input #quantity type="number" [min]="stockItem === 0 ? 0 : 1" [max]="stockItem" [value]="stockItem === 0 ? 0 : 1" [ngClass]="stockItem === 0 ? 'disabledAdd':''"> article(s)
+            <button mat-raised-button type="button" (click)="stockItem === 0 ? '' : addCaddy(itemDetails,quantity.valueAsNumber)" [ngClass]="stockItem === 0 ? 'disabledAdd':'add'">
               ajouter au panier
             </button>
           </p>
@@ -53,20 +53,20 @@
       </div>
       <div class="descriptionItem">
         <h4>Description :</h4>
-        <p>{{getItemsDetails().description}}</p>
+        <p>{{itemDetails.description}}</p>
       </div>
       <div class="technicalInformationsItem">
         <h4>Informations techniques :</h4>
-        <p>{{getItemsDetails().informations}}</p>
+        <p>{{itemDetails.informations}}</p>
       </div>
       <button class="return" mat-raised-button type="button" (click)="back()">retour</button>
     </article>
     <!-- third switch : when a category have been selected, to display the item list -->
     <article *ngSwitchDefault class="listItems">
-      <mat-paginator #paginator [length]="getListItemsToDisplay().length" [pageSize]="6" *ngIf="getPagingList().length>0"
+      <mat-paginator #paginator [length]="listItemsToDisplay.length" [pageSize]="6" *ngIf="pagingList && pagingList.length>0"
         [showFirstLastButtons]="true" (click)="movePage(paginator)">
       </mat-paginator>
-      <div *ngFor="let item of getPagingList()" [ngClass]="'itemCard'" (click)="selectedItem(getListItemsToDisplay().indexOf(item), $event)">
+      <div *ngFor="let item of pagingList" [ngClass]="'itemCard'" (click)="selectedItem(listItemsToDisplay.indexOf(item), $event)">
         <div class="imageCard">
           <img src="../../../assets/imagesArticles/{{item.listImagesOfItem[0].image}}" alt="photo de l'article {{item.name}}">
         </div>

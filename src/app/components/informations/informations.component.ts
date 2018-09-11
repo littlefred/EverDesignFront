@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./informations.component.css']
 })
 export class InformationsComponent implements OnInit {
-  public page: string;
+  page: string;
 
   constructor(public router: Router) {
     if (this.router.url === '/informations/ML') {

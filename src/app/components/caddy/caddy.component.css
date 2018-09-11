@@ -1,0 +1,132 @@
+.pageBody, .pageBodyView {
+  display: flex;
+  flex-direction: column;
+}
+
+.pageBody {
+  height: 86vh;
+}
+
+.order, .caddy, .actions {
+  padding: 5px;
+  margin: 5px;
+  height: 100%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.actionValid, .actionContinue, .actionValidView, .actionContinueView {
+  border: solid 1px #2da4c4;
+  background: #2da4c4;
+  color: #FAD796;
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.actionValid:hover, .actionContinue:hover, .actionValidView:hover, .actionContinueView:hover {
+  background: #FAD796;
+  color: black;
+  border-color: #FAD796;
+}
+
+.actionReset, .actionResetView {
+  border: solid 1px black;
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.actionReset:hover, .actionResetView:hover {
+  background: silver;
+  color: white;
+  border-color: silver;
+}
+
+.caddy {
+  background: #FAD796;
+}
+
+.caddy h3 {
+  margin: 5px 0px;
+}
+
+.caddyTable td, .caddyTable th {
+  background: white;
+  overflow: hidden;
+}
+
+.caddyTable {
+  width: 100%;
+  margin: auto;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.remove {
+  width: 40px;
+}
+
+.price, .cost, .qty, .total {
+  width: 90px;
+  background: pink;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.item {
+  text-align: left;
+}
+
+.screenResponsive, .screenResponsiveLarge {
+  display: none;
+}
+
+.anyOrder {
+  margin: 0px;
+}
+
+@media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1023px) {
+  .screenResponsiveXS, .screenResponsiveLarge {
+    display: none;
+  }
+
+  .screenResponsive {
+    display: table-cell;
+  }
+
+  .screenResponsive img, .screenResponsive span {
+    display: none;
+  }
+
+  .qty {
+    width: 40px;
+  }
+
+  .actionValid, .actionContinue, .actionReset {
+    width: 30%;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .screenResponsiveLarge, .screenResponsive {
+    display: table-cell;
+  }
+
+  .screenResponsiveXS, .footerTable {
+    display: none;
+  }
+
+  .qty {
+    width: 40px;
+  }
+
+  .actionValid, .actionContinue, .actionReset {
+    width: 32%;
+  }
+}

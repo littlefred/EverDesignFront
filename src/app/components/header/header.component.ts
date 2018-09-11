@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private errorMessage: string; // to manage error messages
+  errorMessage: string; // to manage error messages
   // creation of the form control to do the search with autocompletion
   searchItems = new FormControl;
   // creation of an observable for the form control
@@ -20,9 +20,7 @@ export class HeaderComponent implements OnInit {
   // creation of the filtered list of items
   public filteredList = new Array<Items>();
 
-  constructor(private router: Router, private itemsServices: ItemsServicesService) {}
-
-  ngOnInit() {
+  constructor(private router: Router, private itemsServices: ItemsServicesService) {
     this.errorMessage = this.itemsServices.getErrorMessage();
     // loading of method to search items with autocompletion
     this.filteredItems = this.searchItems.valueChanges.pipe(
@@ -36,10 +34,15 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  ngOnInit() {}
+
   // creation of the filter of the autocompletion search
   private filterSearch(value: string): Items[] {
     console.log(value);
-    if (value) {this.router.navigateByUrl('/items'); } else {this.router.navigateByUrl(''); }
+    if (value) {
+      this.router.navigateByUrl('/items');
+      this.itemsServices.setCategoryIdSelected(-1);
+    } else {this.router.navigateByUrl(''); }
     let filtervalue = '';
     if (value) {filtervalue = value.toLowerCase(); }
     return this.itemsServices.getInitialGlobalListItems().filter(
@@ -50,20 +53,6 @@ export class HeaderComponent implements OnInit {
   // method to reset the search
   public reset(): void {
     this.searchItems.reset();
-  }
-
-  /**********************
-  **********************
-  * GETTERS AND SETTERS
-  **********************
-  *********************/
-
-  public setErrorMessage(message: string): void {
-    this.errorMessage = message;
-  }
-
-  public getErrorMessage(): string {
-    return this.errorMessage;
   }
 
 }

@@ -1,13 +1,13 @@
-.error {
-  text-align: center;
-}
-
 .bodyItem {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   min-height: 80vh;
+}
+
+.error {
+  text-align: center;
 }
 
 .listItems, .detailsItem, .itemContent{
