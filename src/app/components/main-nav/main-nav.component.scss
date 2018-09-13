@@ -25,6 +25,10 @@ mat-toolbar {
   padding:0px;
 }
 
+mat-nav-list a, mat-toolbar {
+  font-family: "myFont", Arial, sans-serif;
+}
+
 .mainToolbar {
   display: flex;
   justify-content: space-between;
@@ -33,7 +37,7 @@ mat-toolbar {
 mat-toolbar div, mat-toolbar mat-icon {
   height: 4vh;
   line-height: 4vh;
-  font-size: 2em;
+  font-size: 1.3em;
 }
 
 mat-toolbar button {
@@ -54,7 +58,7 @@ mat-toolbar button:hover {
 
 .mainToolbar div {
   display: none;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .invisibility {

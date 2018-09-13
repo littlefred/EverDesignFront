@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-informations',
   templateUrl: './informations.component.html',
-  styleUrls: ['./informations.component.css']
+  styleUrls: ['./informations.component.scss']
 })
 export class InformationsComponent implements OnInit {
   page: string;

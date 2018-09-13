@@ -7,6 +7,10 @@
   height: 86vh;
 }
 
+.myFont {
+  font-family: "myFont", Arial, sans-serif;
+}
+
 .order, .caddy, .actions {
   padding: 5px;
   margin: 5px;
@@ -50,8 +54,12 @@
   background: #FAD796;
 }
 
-.caddy h3 {
+.caddy h5 {
   margin: 5px 0px;
+}
+
+.caddyTable, .caddyTable td, .caddyTable th {
+  border-collapse: separate;
 }
 
 .caddyTable td, .caddyTable th {
@@ -72,7 +80,6 @@
 
 .price, .cost, .qty, .total {
   width: 90px;
-  background: pink;
 }
 
 .alignRight {

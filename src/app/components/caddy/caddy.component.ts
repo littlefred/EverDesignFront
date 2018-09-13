@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-caddy',
   templateUrl: './caddy.component.html',
-  styleUrls: ['./caddy.component.css']
+  styleUrls: ['./caddy.component.scss']
 })
 export class CaddyComponent implements OnInit {
   orderInProgress: Orders; // attribut to manage a user order in progress
@@ -47,6 +47,7 @@ export class CaddyComponent implements OnInit {
         public getTotalCost(list: OrdersContent[]): string {
           let cost = 0;
           list.forEach(line => cost += (line.item.discountPrice ? line.item.discountPrice : line.item.price) * line.qty);
+          cost = cost / 100;
           return cost.toFixed(2);
         }
 

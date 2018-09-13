@@ -31,7 +31,7 @@ export class ItemsServicesService {
       },
       (error: HttpErrorResponse) => {
         console.log(error);
-        if (error.status === 404) {this.errorMessage = 'erreur technique :\nDésolé, actuellement aucun article trouvé.'; }
+        if (error.status === 404) {this.errorMessage = 'erreur technique : Désolé, actuellement aucun article trouvé.'; }
       }
     );
   }

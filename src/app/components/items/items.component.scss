@@ -10,6 +10,10 @@
   text-align: center;
 }
 
+.myFont {
+  font-family: "myFont", Arial, sans-serif;
+}
+
 .listItems, .detailsItem, .itemContent{
   padding:0px;
   display: flex;
@@ -37,7 +41,7 @@ mat-paginator, .itemCard {
 }
 
 .imageCard {
-  height: 19vh;
+  height: 23vh;
   width: auto;
   overflow: hidden;
   text-align: center;
@@ -45,7 +49,7 @@ mat-paginator, .itemCard {
 }
 
 .imageCard img {
-  height: 19vh;
+  height: 23vh;
 }
 
 .identityCard {
@@ -54,11 +58,11 @@ mat-paginator, .itemCard {
   padding: 5px;
 }
 
-.identityCard h1, .identityCard h3, .identityCard h6 {
+.identityCard h1, .identityCard h4, .identityCard h6 {
   margin: 0px;
 }
 
-.identityCard h1, .identityCard h3 {
+.identityCard h1, .identityCard h4 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -94,13 +98,13 @@ mat-paginator, .itemCard {
 }
 
 .mainPic {
-  height: 19vh;
+  height: 23vh;
   overflow: hidden;
   text-align: center;
 }
 
 .mainPic img {
-  height: 19vh;
+  height: 23vh;
 }
 
 .albumItem {
@@ -114,34 +118,37 @@ mat-paginator, .itemCard {
 }
 
 .albumPic {
-  width: 15vw;
-  height: 9vh;
+  max-width: 25%;
+  height: 8vh;
   display: flex;
+  justify-content: center;
   align-items: center;
-
+  overflow: hidden;
+  box-shadow: 1px 1px 6px 1px;
 }
 
 .albumPic img {
-  width: 100%;
-  box-shadow: 1px 1px 6px 1px;
+  height: 100%;
 }
 
 .identityItem {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   background: #FAD796;
   width: 100%;
   margin-bottom: 5px;
+  padding: 5px;
 }
 
 .dataItem {
   margin: 5px;
-  width: 70%;
+  width: 100%;
 }
 
-.dataItem h1 {
+.dataItem h4 {
   margin: 0px;
 }
 
@@ -163,13 +170,16 @@ mat-paginator, .itemCard {
 
 .itemPrice {
   background: white;
-  width: 30%;
+  width: 60%;
   height: 50%;
   display: flex;
   justify-content: center;
-  text-align: center;
-  align-items: center;
   margin-right: 5px;
+}
+
+.itemPrice h4 {
+  margin: auto;
+  text-align: center;
 }
 
 .add {
@@ -214,13 +224,54 @@ mat-paginator, .itemCard {
   display: none;
 }
 
+p {
+  margin: 0px;
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+li {
+  list-style-type: none;
+}
+
+li:before {
+  content: "- ";
+}
+
+.desactive {
+  color: silver;
+}
+
 @media screen and (orientation: landscape) {
   .itemCard {
     width: 45vw;
   }
 
-  .imageCard img, .imageCard, .mainPic, .mainPic img {
-    height: 30vh;
+  .imageCard img, .imageCard {
+    height: 36vh;
+  }
+
+  .mainPic, .mainPic img {
+    height: 75vh;
+  }
+
+  .albumItem {
+    height: 20vh;
+  }
+
+  .albumPic {
+    height: 17vh;
+  }
+
+  .dataItem {
+    width: 68%;
+  }
+
+  .itemPrice {
+    width: 28%;
   }
 }
 
@@ -232,6 +283,14 @@ mat-paginator, .itemCard {
   .imageCard img, .imageCard, .mainPic, .mainPic img {
     height: 15vh;
   }
+
+  .albumItem {
+    height: 9vh;
+  }
+
+  .albumPic {
+    height: 7vh;
+  }
 }
 
 @media screen and (orientation: landscape) and (min-width:1024px) {
@@ -240,7 +299,7 @@ mat-paginator, .itemCard {
   }
 
   .imageCard img, .imageCard, .mainPic, .mainPic img {
-    height: 15vh;
+    height: 18vh;
   }
 
   .detailsItem, .listItems {
@@ -254,6 +313,22 @@ mat-paginator, .itemCard {
 
   .caddyView {
     display: block;
+  }
+
+  .albumItem {
+    height: 10vh;
+  }
+
+  .albumPic {
+    height: 8vh;
+  }
+
+  .dataItem {
+    width: 100%;
+  }
+
+  .itemPrice {
+    width: 60%;
   }
 
 }
@@ -274,6 +349,14 @@ mat-paginator, .itemCard {
 
   .picturesItem, .itemResume{
     width: 45%;
+  }
+
+  .albumItem {
+    height: 7vh;
+  }
+
+  .albumPic {
+    height: 5vh;
   }
 
   .caddyView {

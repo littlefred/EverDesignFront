@@ -8,7 +8,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
   MatInputModule, MatFormFieldModule, MatAutocompleteModule, MatPaginatorModule, MatSelectModule,
   MatOptionModule,
-  MatTableModule} from '@angular/material';
+  MatTableModule,
+  MatDialogModule} from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,6 +19,8 @@ import { InformationsComponent } from './components/informations/informations.co
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CaddyComponent } from './components/caddy/caddy.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { CaddyComponent } from './components/caddy/caddy.component';
     ContactComponent,
     InformationsComponent,
     HeaderComponent,
-    CaddyComponent
+    CaddyComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,12 @@ import { CaddyComponent } from './components/caddy/caddy.component';
     MatPaginatorModule,
     MatSelectModule,
     MatOptionModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MDBBootstrapModule.forRoot()
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
