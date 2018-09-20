@@ -15,11 +15,11 @@ export class ItemsServicesService {
   private categoryIdSelected = -1;
   // attribut to save the initial list of all items
   private initialGlobalListItems = new Array<Items>();
-  // attribut to save the selection list
+  // BehaviorSubject to manage the selection list
   private selectedListItems = new BehaviorSubject<Items[]>(new Array<Items>());
-  // Subject to define the display of item component since navigation choice
+  // attribut to define the display of item component since navigation choice
   private screenObs = new BehaviorSubject<string>('');
-  // Subject to define one item to display some details since navigation choice
+  // BehaviorSubject to define one item to display some details since navigation choice
   private seeItem = new BehaviorSubject<Items>(new Items());
 
   constructor(private http: HttpClient) {
@@ -31,7 +31,7 @@ export class ItemsServicesService {
       },
       (error: HttpErrorResponse) => {
         console.log(error);
-        if (error.status === 404) {this.errorMessage = 'erreur technique : Désolé, actuellement aucun article trouvé.'; }
+        if (error.status === 404) {this.errorMessage = 'erreur technique :\nDésolé, actuellement aucun article trouvé.'; }
       }
     );
   }
@@ -41,11 +41,7 @@ export class ItemsServicesService {
     return this.http.get<Items[]>(this.URL_ITEMS);
   }
 
-  // method to modify the screenItem attribut of items component
-  public updateScreenItems(s: string): void {
-    this.screenObs.next(s);
-  }
-
+  // method to check the stock of an item
   public getStock(idItem: number): Observable<number> {
     return this.http.get<number>(this.URL_ITEMS + '/stock/' + idItem);
   }
@@ -56,6 +52,10 @@ export class ItemsServicesService {
   **********************
   *********************/
 
+  public getErrorMessage(): string {
+    return this.errorMessage;
+  }
+
   public setCategoryIdSelected(id: number): void {
     this.categoryIdSelected = id;
     this.selectedListItems.next(this.initialGlobalListItems.filter(item => item.category.id === this.categoryIdSelected));
@@ -65,24 +65,12 @@ export class ItemsServicesService {
     return this.categoryIdSelected;
   }
 
-  public setErrorMessage(message: string): void {
-    this.errorMessage = message;
-  }
-
-  public getErrorMessage(): string {
-    return this.errorMessage;
-  }
-
   public getInitialGlobalListItems(): Items[] {
     return this.initialGlobalListItems;
   }
 
   public getSelectedListItems(): Observable<Items[]> {
     return this.selectedListItems;
-  }
-
-  public setSelectedListItems(items: Items[]): void {
-    this.selectedListItems.next(items);
   }
 
   public getScreenObs(): Observable<string> {

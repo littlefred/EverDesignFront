@@ -9,7 +9,9 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
   MatInputModule, MatFormFieldModule, MatAutocompleteModule, MatPaginatorModule, MatSelectModule,
   MatOptionModule,
   MatTableModule,
-  MatDialogModule} from '@angular/material';
+  MatDialogModule,
+  MatSnackBarModule,
+  MatBadgeModule} from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,10 +19,11 @@ import { ItemsComponent } from './components/items/items.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { InformationsComponent } from './components/informations/informations.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CaddyComponent } from './components/caddy/caddy.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     InformationsComponent,
     HeaderComponent,
     CaddyComponent,
-    DialogComponent
+    DialogComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     MatOptionModule,
     MatTableModule,
     MatDialogModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatBadgeModule
   ],
   entryComponents: [
     DialogComponent

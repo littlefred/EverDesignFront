@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -20,7 +21,9 @@ export class HeaderComponent implements OnInit {
   // creation of the filtered list of items
   public filteredList = new Array<Items>();
 
-  constructor(private router: Router, private itemsServices: ItemsServicesService) {
+  constructor(private router: Router, private itemsServices: ItemsServicesService, private location: Location) {}
+
+  ngOnInit() {
     this.errorMessage = this.itemsServices.getErrorMessage();
     // loading of method to search items with autocompletion
     this.filteredItems = this.searchItems.valueChanges.pipe(
@@ -29,22 +32,22 @@ export class HeaderComponent implements OnInit {
     );
     this.filteredItems.subscribe(
       (list) => {
-        this.itemsServices.setSelectedListItems(list);
+        this.filteredList = list;
       }
     );
   }
 
-  ngOnInit() {}
-
   // creation of the filter of the autocompletion search
   private filterSearch(value: string): Items[] {
-    console.log(value);
-    if (value) {
-      this.router.navigateByUrl('/items');
-      this.itemsServices.setCategoryIdSelected(-1);
-    } else {this.router.navigateByUrl(''); }
+    /* if (value) {
+      // this.router.navigateByUrl('/items');
+      // this.itemsServices.setCategoryIdSelected(-1);
+    } else {this.router.navigateByUrl(''); }*/
     let filtervalue = '';
-    if (value) {filtervalue = value.toLowerCase(); }
+    if (value) {
+      filtervalue = value.toLowerCase();
+      this.itemsServices.setScreenObs('');
+    }
     return this.itemsServices.getInitialGlobalListItems().filter(
       item => item.name.toLowerCase().includes(filtervalue)
     );

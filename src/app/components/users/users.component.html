@@ -1,0 +1,10 @@
+<!-- we make a switch to manage the user page display -->
+<section [ngSwitch]="userView">
+  <!-- when user is connected, display your account -->
+  <article *ngSwitchCase="'userAccount'"></article>
+  <!-- default : account creation -->
+  <article *ngSwitchDefault>
+    formulaire de creation de compte
+  </article>
+
+</section>

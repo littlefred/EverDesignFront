@@ -14,12 +14,40 @@
       <!--/.Carousel Wrapper-->
     </mat-dialog-content>
   </article>
-
-  <article *ngSwitchCase="false">
-
+  <!-- this dialogue when we ask a cnofirm at user -->
+  <article *ngSwitchCase="'removeConfirm'" style="text-align:center;">
+    <h3 mat-dialog-title>Confirmation</h3>
+    <mat-dialog-content>
+      <span *ngIf="!(data.update)">Voulez-vous vraiment supprimer :<br></span>
+      {{data.message}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button mat-button mat-dialog-close>NON</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OUI</button>
+    </mat-dialog-actions>
   </article>
-
-  <article *ngSwitchDefault>
-
+  <!-- default : dialogue to do connexion -->
+  <article *ngSwitchDefault class="cnxView">
+    <form [formGroup]="cnxControl">
+      <h3 mat-dialog-title>connexion</h3>
+      <h6 mat-dialog-title *ngIf="errorlogin" class="errorLogin">{{errorlogin}}</h6>
+      <mat-dialog-content>
+        <div>
+          <mat-form-field>
+            <input #login matInput type="email" placeholder="votre email" aria-label="saisir le mail" formControlName="email" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input #pwd matInput type="password" placeholder="votre mot de passe" aria-label="saisir le mot de passe" formControlName="pwd" required>
+          </mat-form-field>
+          <cite align="end" (click)="askPassword()">mot de passe oublié</cite>
+        </div>
+      </mat-dialog-content>
+      <mat-dialog-actions align="center">
+        <div>
+          <button mat-raised-button type="submit" [disabled] = "!cnxControl.valid" class="cnx" (click)="userCnx(login.value, pwd.value)">CONNEXION</button><br>
+          <cite class="account" [routerLink]="['/users']" routerLinkActive="router-link-active" (click)="close()">creer un compte</cite>
+        </div>
+      </mat-dialog-actions>
+    </form>
   </article>
 </section>

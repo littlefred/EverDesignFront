@@ -14,6 +14,7 @@ export class Users {
   public zipCode?: string;
   public country?: Countries;
   public position?: Positions;
+  public dateOfCreation?: Date;
 
   constructor(id?: number, firstName?: string, lastName?: string, dateOfBirth?: Date,
     mail?: string, password?: string, phone?: number, street?: string, city?: string, zipCode?: string,

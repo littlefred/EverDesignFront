@@ -1,4 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
+  <!-- left menu : main menu -->
   <mat-sidenav
   #drawer
   class="sidenav"
@@ -17,7 +18,7 @@
     <a mat-list-item href="#" *ngIf="router.url!='/contact'" [routerLink]="'/contact'" class="noSelected" (click)="resetCategories() ; drawer.toggle()">Nous Contacter</a>
   </mat-nav-list>
 </mat-sidenav>
-
+<!-- right menu : connection / user / admin menu-->
 <mat-sidenav
 #cnxMenu
 class="sidenav"
@@ -32,16 +33,16 @@ position="end">
 </mat-toolbar>
 <mat-nav-list>
   <a mat-list-item href="#" [routerLink]="'/caddy'" (click)="cnxMenu.toggle()" class="noSelected">Mon panier</a>
-  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="!statusConnexion" class="noSelected">Créér un compte</a>
-  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="!statusConnexion" class="noSelected">Me connecter</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" [routerLink]="['/users']" *ngIf="!statusConnexion" class="noSelected">Créér un compte</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle() ; getConnection($event)" *ngIf="!statusConnexion" class="noSelected">Me connecter</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Mon compte</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Mes commandes en cours</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Historique de mes commandes</a>
-  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="getStatusUser() && (getStatusUser() === 5 || getStatusUser() === 6)" class="noSelected">Gestion administrative</a>
-  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Deconnexion</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion && getUserPosition() && (userPosition === 'USER_ADMIN' || userPosition === 'USER_ADMIN2')" class="noSelected">Gestion administrative</a>
+  <a mat-list-item href="#" (click)="cnxMenu.toggle() ; getDeconnection($event)" *ngIf="statusConnexion" class="noSelected">Deconnexion</a>
 </mat-nav-list>
 </mat-sidenav>
-
+<!-- headband with site name and menus access buttons -->
 <mat-sidenav-content>
   <mat-toolbar class="mainToolbar">
     <button
@@ -60,8 +61,7 @@ position="end">
   <div>Compte</div>
 </button>
 </mat-toolbar>
-<section class="header" *ngIf="router.url == '/' || router.url == '/items' || router.url == 'categories'"><app-header></app-header></section>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet><!-- part to manage display since user navigation -->
 </mat-sidenav-content>
 </mat-sidenav-container>
 

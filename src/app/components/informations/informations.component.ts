@@ -9,16 +9,15 @@ import { Router } from '@angular/router';
 export class InformationsComponent implements OnInit {
   page: string;
 
-  constructor(public router: Router) {
+  constructor(public router: Router) {}
+
+  ngOnInit() {
     if (this.router.url === '/informations/ML') {
       this.page = 'ML';
     }
     if (this.router.url === '/informations/CGV') {
       this.page = 'CGV';
     }
-  }
-
-  ngOnInit() {
   }
 
 }

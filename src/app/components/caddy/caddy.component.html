@@ -9,10 +9,10 @@
     <!-- step by default : the main display of caddy -->
     <div *ngSwitchDefault>
       <!-- Part 1 : to manage the display of order in progress -->
-      <section class="order">
-        <p class="anyOrder" *ngIf="!orderInProgress" style="text-align:center;">Aucune commande en cours.</p>
-        <a href="#" (click)="resetOrder($event)" *ngIf="orderInProgress">Annuler ma commande en cours</a>
-        <a href="#" [routerLink]="'/caddy'" *ngIf="orderInProgress">Visualiser</a>
+      <section class="order" *ngIf="statusConnexion">
+        <p class="anyOrder" *ngIf="!(orderInProgress.numberOrder)" style="text-align:center;">Aucune commande en cours.</p>
+        <a href="#" (click)="resetOrder($event)" *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">Annuler ma commande en cours</a>
+        <a href="#" [routerLink]="'/caddy'" *ngIf="(orderInProgress.numberOrder) && (router.url != '/caddy')">Visualiser</a>
       </section>
       <!-- Part 2 : to manage the display of user caddy -->
       <section class="caddy">
@@ -38,10 +38,11 @@
             </tfoot>
             <tbody>
               <tr *ngFor="let line of caddyInProgress">
-                <td><i class="material-icons">delete</i></td>
+                <td><i class="material-icons" (click)="deleteItem(line.item)">delete</i></td>
                 <td class="screenResponsiveXS item" (click)="callBackItem(line.item)">
                   {{line.item.name}}<br>
                   <cite>{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</cite>
+                  <cite *ngIf="line.qty > line.item.quantity" style="color:red;"><br>- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</cite>
                 </td>
                 <td class="screenResponsive item">
                   <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(line.item)">
@@ -50,9 +51,12 @@
                     <cite matLine>référence : {{line.item.reference}}</cite>
                     <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of line.item.colors"> - {{color.name}}</ng-container></span>
                   </mat-list-item></mat-list>
+                  <span *ngIf="line.qty > line.item.quantity" style="color:red;">- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</span>
                 </td>
                 <td *ngIf="router.url == '/caddy'" class="screenResponsiveLarge alignRight">{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</td>
-                <td>{{line.qty}}</td>
+                <td>
+                  <input #quantity type="number" [min]=1 [max]="line.item.quantity" value="line.qty" [(ngModel)]="line.qty">
+                </td>
                 <td *ngIf="router.url == '/caddy'" class="screenResponsive alignRight">{{(((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100)*line.qty).toFixed(2)}}€</td>
               </tr>
             </tbody>
@@ -64,7 +68,7 @@
             {{router.url != '/caddy'  ? 'Finaliser mon panier' : statusConnexion && orderInProgress ? 'Ajouter à la commande en cours' : 'Valider mon panier'}}
           </button>
           <button [ngClass]="router.url != '/caddy' ? 'actionContinueView myFont' : 'actionContinue myFont'" mat-raised-button type="button" [routerLink]="''" *ngIf="caddyInProgress.length > 0">Continuer mes achats</button>
-          <button [ngClass]="router.url != '/caddy' ? 'actionResetView myFont' : 'actionReset myFont'" mat-raised-button type="button" [routerLink]="''" *ngIf="caddyInProgress.length > 0" (click)="resetCaddy()">Vider mon panier</button>
+          <button [ngClass]="router.url != '/caddy' ? 'actionResetView myFont' : 'actionReset myFont'" mat-raised-button type="button" *ngIf="caddyInProgress.length > 0" (click)="resetCaddy()">Vider mon panier</button>
           <button class="return myFont" mat-raised-button type="button" (click)="callBack()" *ngIf="router.url == '/caddy'">RETOUR</button>
         </section>
       </div>

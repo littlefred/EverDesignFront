@@ -49,6 +49,12 @@ button {
   overflow: hidden;
 }
 
+button:hover {
+  background: lightblue;
+  border-color: lightblue;
+  color: black;
+}
+
 .shop {
   height: 4vh;
   line-height: 4vh;
@@ -66,7 +72,7 @@ button div {
   display: none;
 }
 
-@media screen and (min-width: 1024px) and (orientation: landscape) {
+@media screen and (min-width: 1300px) and (orientation: landscape) {
   button div {
     display: block;
   }
@@ -80,4 +86,5 @@ button div {
 
 .error {
   text-align: center;
+  white-space: pre-wrap;
 }

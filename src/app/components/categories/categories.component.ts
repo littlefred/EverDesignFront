@@ -14,28 +14,24 @@ export class CategoriesComponent implements OnInit {
   errorMessage: string; // to manage error messages
   categories: Categories[]; // to keep the list of all categories
 
-  constructor(private categoriesServices: CategoriesServicesService,
-    public router: Router,
-    private itemsServices: ItemsServicesService) {
-      this.categoriesServices.getAllCategories().subscribe(
-        (categories: Categories[]) => {
+  constructor(private categoriesServices: CategoriesServicesService, public router: Router, private itemsServices: ItemsServicesService) {}
+
+  ngOnInit() {
+    this.categoriesServices.getCategoriesList().subscribe(
+      (categories: Categories[]) => {
+        if (categories.length > 0) {
           this.categories = categories;
-          console.log('=> Initial global list of categories :');
-          console.log(this.categories);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          if (error.status === 404) {this.errorMessage = 'Désolé, actuellement aucune rubrique n\'est disponible.'; }
+        } else {
+          this.errorMessage = this.categoriesServices.getErrorMessage();
         }
-      );
-    }
-
-    ngOnInit() {
-    }
-
-    public selectedCategory(id: number): void {
-      this.itemsServices.setCategoryIdSelected(id);
-      this.router.navigateByUrl('/items');
-    }
-
+      }
+    );
   }
+
+  // method to selection a category
+  public selectedCategory(id: number): void {
+    this.itemsServices.setCategoryIdSelected(id);
+    this.router.navigateByUrl('/items');
+  }
+
+}

@@ -1,6 +1,5 @@
 import { Categories } from 'src/app/models/categories';
 import { Images } from './images';
-import { Stock } from './stock';
 import { Colors } from './colors';
 
 export class Items {
@@ -12,13 +11,13 @@ export class Items {
   public discountPrice?: number;
   public informations?: string;
   public description?: string;
-  public stockage?: Stock;
+  public quantity?: number;
   public listImagesOfItem?: Images[];
   public colors?: Colors[];
 
   constructor(id?: number, name?: string, reference?: string, category?: Categories,
     price?: number, discountPrice?: number, informations?: string, description?: string,
-    stockage?: Stock, listImagesOfItem?: Images[], colors?: Colors[]) {
+    quantity?: number, listImagesOfItem?: Images[], colors?: Colors[]) {
     this.id = id;
     this.name = name;
     this.reference = reference;
@@ -27,7 +26,7 @@ export class Items {
     this.discountPrice = discountPrice;
     this.informations = informations;
     this.description = description;
-    this.stockage = stockage;
+    this.quantity = quantity;
     this.listImagesOfItem = listImagesOfItem;
     this.colors = colors;
   }

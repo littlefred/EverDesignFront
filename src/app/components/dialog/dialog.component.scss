@@ -1,0 +1,32 @@
+.cnxView div {
+  display: flex;
+  flex-direction: column;
+}
+
+.cnxView h3 {
+  text-align: center;
+  font-family: "myFont", Arial, sans-serif;
+}
+
+.cnx {
+  background: #2da4c4;
+  border-color: #2da4c4;
+  color: #FAD796;
+  font-family: "myFont", Arial, sans-serif;
+}
+
+.cnx:hover {
+  background: #FAD796;
+  border-color: #FAD796;
+  color: black;
+}
+
+.account {
+  color: #2da4c4;
+  font-family: "myFont", Arial, sans-serif;
+}
+
+.errorLogin {
+  color: red;
+  font-style: italic;
+}

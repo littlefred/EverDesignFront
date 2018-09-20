@@ -1,7 +1,8 @@
+<!-- section header to display search bloc and caddy button -->
 <section>
   <article class="part1">
     <i class="material-icons search">search</i>
-    <input matInput placeholder="Rechercher un article" aria-label="recherche d'article" [formControl]="searchItems">
+    <input matInput type="text" placeholder="Rechercher un article" aria-label="recherche d'article" [formControl]="searchItems">
     <i class="material-icons cancel" (click)="reset()">cancel</i>
   </article>
   <article class="part2">
@@ -11,4 +12,5 @@
     </button>
   </article>
 </section>
+<!-- sectionto display error message -->
 <section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>

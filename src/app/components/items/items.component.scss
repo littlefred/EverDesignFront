@@ -188,13 +188,13 @@ mat-paginator, .itemCard {
   border-color: #2da4c4;
   margin-top: 5px;
 }
-
+/*
 .disabledAdd {
   background: silver;
   color: grey;
   border-color: silver;
   margin-top: 5px;
-}
+}*/
 
 .quantityItem input {
   text-align: right;
@@ -204,6 +204,7 @@ mat-paginator, .itemCard {
 .descriptionItem, .technicalInformationsItem {
   background: #FAD796;
   padding: 5px;
+  white-space: pre-wrap;
 }
 
 .descriptionItem h4, .technicalInformationsItem h4 {

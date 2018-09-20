@@ -1,3 +1,5 @@
+<!-- header to make a search with autocompletion -->
+<!--<section class="header"><app-header></app-header></section>-->
 <!-- Error message if there is one -->
 <section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>
 <!-- body of page -->
@@ -13,12 +15,12 @@
     <article *ngSwitchCase="'detailsItem'" class="detailsItem">
       <div class="picturesItem">
         <div class="mainPic">
-          <img src="../../../assets/imagesArticles/{{getImage() ? getImage() : itemDetails.listImagesOfItem[0].image}}" (click)="openDialog()" alt="photo de l'article {{itemDetails.name}}">
+          <img src="../../../assets/imagesArticles/{{image ? image : itemDetails.listImagesOfItem[0].image}}" (click)="openDialog()" alt="photo de l'article {{itemDetails.name}}">
         </div>
         <div *ngIf="itemDetails.listImagesOfItem.length>1" class="albumItem">
           <i class="material-icons {{numberPage >=1 ? '' : 'desactive'}}" (click)="numberPage >=1 ? nextPic(numberPage - 1) : ''">arrow_back_ios</i>
           <div class="albumPic" *ngFor="let img of pagingAlbum" >
-            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" (click)="setImage(img.image)"
+            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" (click)="image = img.image"
             alt="photo {{itemDetails.listImagesOfItem.indexOf(img)}} de l'article {{itemDetails.name}}">
           </div>
           <i class="material-icons {{(itemDetails.listImagesOfItem.length / ALBUM_SIZE >= 1) && (numberPage < maxPage()) ? '' : 'desactive'}}" (click)="(itemDetails.listImagesOfItem.length / ALBUM_SIZE >= 1) && (numberPage < maxPage()) ? nextPic(numberPage + 1) : ''">arrow_forward_ios</i>
@@ -49,14 +51,14 @@
         <div class="quantityItem">
           <p class="myFont">Actuellement en stock : {{stockItem}}</p>
           <p>
-            vous souhaitez <input #quantity type="number" [min]="stockItem === 0 ? 0 : 1" [max]="stockItem" [value]="stockItem === 0 ? 0 : 1" [ngClass]="stockItem === 0 ? 'disabledAdd':''"> article(s)
-            <button mat-raised-button type="button" (click)="stockItem === 0 ? '' : addCaddy(itemDetails,quantity.valueAsNumber)" [ngClass]="stockItem === 0 ? 'disabledAdd myFont':'add myFont'">
+            vous souhaitez <input #quantity type="number" [disabled]="stockItem === 0" [min]="stockItem === 0 ? 0 : 1" [max]="stockItem" [value]="stockItem === 0 ? 0 : 1"> article(s)
+            <button mat-raised-button type="button" [disabled]="stockItem === 0" (click)="addCaddy(itemDetails,quantity.valueAsNumber)" class="add myFont">
               ajouter au panier
             </button>
           </p>
         </div>
       </div>
-      <div class="descriptionItem">
+      <div class="descriptionItem" *ngIf="itemDetails.description.length>0">
         <h4 class="myFont">Description :</h4>
         <p>{{itemDetails.description}}</p>
       </div>
