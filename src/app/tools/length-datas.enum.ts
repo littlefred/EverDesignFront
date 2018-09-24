@@ -1,0 +1,11 @@
+export enum LengthDatas {
+  DATA_LASTNAME = 25,
+  DATA_FIRSTNAME = 25,
+  DATA_STREET = 100,
+  DATA_ZIPCODE = 10,
+  DATA_CITY = 165,
+  DATA_COUNTRY = 100,
+  DATA_PHONE = 15,
+  DATA_MAIL = 100,
+  DATA_PWD = 25
+}

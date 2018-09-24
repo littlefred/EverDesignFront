@@ -1,3 +1,4 @@
+import { LengthDatas } from './../../tools/length-datas.enum';
 import { UsersServicesService } from './../../services/users-services.service';
 import { CaddyComponent } from './../caddy/caddy.component';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -11,9 +12,10 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 })
 export class DialogComponent implements OnInit {
   errorlogin: string; // attribut to note the error message for a connexion
+  // method to control login formulaire
   cnxControl = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
-    pwd: new FormControl('', [Validators.required, Validators.maxLength(25)])
+    email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(LengthDatas.DATA_MAIL)]),
+    pwd: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_PWD), Validators.pattern('[^"\'= ]*')])
   });
 
   constructor(public dialogRef: MatDialogRef<CaddyComponent>, @Inject(MAT_DIALOG_DATA) public data: any,

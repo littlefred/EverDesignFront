@@ -13,13 +13,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class UsersServicesService {
   // attribut to save the backend address
   private readonly URL_USERS = environment.backEndUrl + '/users';
-  // Subject to follow the list of item that user want to buy
+  // BehaviorSubject to follow the connection of user
   private userConnected = new BehaviorSubject<boolean>(false);
   // attribut to save the state connection of user
   private connectionState = new Subject<boolean>();
   // attribut to manage the user data when is connected
   private user: Users;
-  // private user = new BehaviorSubject<Users>(new Users());
 
   constructor(private http: HttpClient, private caddyServices: CaddyServicesService, private router: Router) {
     this.userConnected.subscribe((value) => {this.connectionState.next(value); });
@@ -54,7 +53,7 @@ export class UsersServicesService {
     this.user = new Users();
     this.userConnected.next(false);
     this.router.navigateByUrl('');
-    this.caddyServices.deleteOrderInProgress();
+    this.caddyServices.cleanOrderInProgress();
   }
 
   /**********************

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { OrdersContent } from './../models/orders-content';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Items } from '../models/items';
 import { Orders } from '../models/orders';
 import { environment } from '../../environments/environment.prod';
@@ -18,6 +18,10 @@ export class CaddyServicesService {
   private orderInProgress = new BehaviorSubject<Orders>(new Orders());
 
   constructor(private http: HttpClient) {}
+
+  /**********************
+  * METHODS FOR CADDY
+  *********************/
 
   // method to add an item in the user caddy
   public updateCaddy(item: Items, qty: number): void {
@@ -43,27 +47,51 @@ export class CaddyServicesService {
     this.caddyList.next(new Array<OrdersContent>());
   }
 
-  // method to reset the user order in progress
-  public deleteOrderInProgress(): void {
-    this.orderInProgress.next(new Orders());
+  /**********************
+  * METHODS FOR ORDER
+  *********************/
+
+  // method to cancel the order in progress
+  public deletedOrderInProgress(userId: number): Observable<any> {
+    const id = this.orderInProgress.getValue().id.toString();
+    return this.http.delete(this.URL_ORDERS, {params: {orderId: id, userId: userId.toString()}});
   }
 
-  // method to save an order in DB
-  public saveCaddy(order: Orders): void {
-    this.http.post(this.URL_ORDERS, order).subscribe(
-      (value: Orders) => {
-        this.caddyList.next(new Array<OrdersContent>());
-        this.orderInProgress.next(value);
-      }
-    );
+  // method to update the order status
+  public updateStatusOrder(order: Orders): Observable<Orders> {
+    return this.http.put(this.URL_ORDERS, order);
   }
 
   // method to get an order in progress of user (order before paid)
   public getOrderInProgressBeforePaid(userId: number): void {
     this.http.get(this.URL_ORDERS + '?userId=' + userId).subscribe(
-      (result: Orders) => {this.orderInProgress.next(result); },
-      (error: HttpErrorResponse) => {console.log(error); }
+      (result: Orders) => {
+        this.orderInProgress.next(result);
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          console.log('Pas de commandes en cours pour cet utilisateur');
+          this.orderInProgress.next(new Orders());
+        } else {
+          console.log(error);
+        }
+      }
     );
+  }
+
+  // method to reset the user order in progress when user disconnected
+  public cleanOrderInProgress(): void {
+    this.orderInProgress.next(new Orders());
+  }
+
+  // method to save an order in DB
+  public saveCaddy(order: Orders): Observable<Orders> {
+    return this.http.post(this.URL_ORDERS, order);
+  }
+
+  // method to update the order delivery address
+  public updateOrderAddress(order: Orders): Observable<Orders> {
+    return this.http.put(this.URL_ORDERS, order);
   }
 
   /**********************
@@ -76,8 +104,16 @@ export class CaddyServicesService {
     return this.caddyList;
   }
 
+  public setCaddyList(orderContent: OrdersContent[]): void {
+    this.caddyList.next(orderContent);
+  }
+
   public getOrderInProgress(): Observable<Orders> {
     return this.orderInProgress;
+  }
+
+  public setOrderInProgress(order: Orders): void {
+    this.orderInProgress.next(order);
   }
 
 }

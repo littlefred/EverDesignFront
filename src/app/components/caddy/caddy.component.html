@@ -3,14 +3,155 @@
   <ng-container [ngSwitch]="caddyStep">
     <!-- Step to chack the delivery address -->
     <div *ngSwitchCase="'firstStep'">
-      adresse
+      <section class="displayStreet">
+        <article class="address" *ngIf="!isEditable">
+          <h5>Adresse de livraison actuelle :</h5>
+          <p>{{orderInProgress.address}}</p>
+        </article>
+        <article *ngIf="isEditable">
+          <form [formGroup]="updateStreet" class="addressForm">
+            <mat-form-field class="full">
+              <input matInput class="inputStreet" type="text" placeholder="indiquez votre rue" aria-label="saisir votre rue" formControlName="street" required>
+              <mat-error *ngIf="updateStreet.get('street').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+              <mat-error *ngIf="updateStreet.get('street').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            </mat-form-field>
+            <mat-form-field class="halfFull">
+              <input matInput type="text" placeholder="indiquez votre code postal" aria-label="saisir votre code postal" formControlName="zipCode" required>
+              <mat-error *ngIf="updateStreet.get('zipCode').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+              <mat-error *ngIf="updateStreet.get('zipCode').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            </mat-form-field>
+            <mat-form-field class="halfFull">
+              <input matInput type="text" placeholder="indiquez votre ville" aria-label="saisir votre ville" formControlName="city" required>
+              <mat-error *ngIf="updateStreet.get('city').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+              <mat-error *ngIf="updateStreet.get('city').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            </mat-form-field>
+            <mat-form-field class="countrySelect">
+              <mat-select placeholder="Sélectionnez votre pays" formControlName="country" required>
+                <mat-option *ngFor="let country of countries.values()" [value]="country">{{country}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="updateStreet.get('country').hasError('validCountry')">Selectionnez une valeur de la liste</mat-error>
+              <mat-error *ngIf="updateStreet.get('country').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            </mat-form-field>
+          </form>
+        </article>
+        <article class="buttonsStreet">
+          <button mat-raised-button type="button" (click)="!isEditable? goodAddress() : updateAddressOrder(updateStreet.value)" class="confirmStreet" [disabled]="isEditable? !updateStreet.valid : false">{{isEditable? 'Enregistrer' : 'Confirmer'}}</button>
+          <button mat-raised-button (click)="isEditable? editCancelAddress() : editAddress()" class="updateStreet">{{isEditable? 'Annuler' : 'Modifier'}}</button>
+        </article>
+      </section>
+    </div>
+
+    <!-- Step to pay order -->
+    <div *ngSwitchCase="'secondStep'" class="paymentPage">
+      <ng-container *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">
+        <h6 class="myFont">Résumé de votre commande n°{{orderInProgress.numberOrder}} du {{orderInProgress.dateOfCreation | date: 'dd/MM/yyyy'}}.</h6>
+        <table class="orderTable">
+          <thead>
+            <tr>
+              <th>ARTICLE(S)</th>
+              <th class="screenResponsiveLarge price">PRIX</th>
+              <th class="qty">QTE</th>
+              <th class="screenResponsive cost">TOTAL</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th colspan="3" class="screenResponsiveLarge alignRight myFont">montant global de la commande : </th>
+              <th colspan="2" class="screenResponsive footerTable alignRight myFont">montant global de la commande : </th>
+              <th colspan="1" class="screenResponsiveXS alignRight myFont">montant global de la commande : </th>
+              <th class="alignRight total">{{getTotalCost(orderInProgress.listOrderItems)}}€</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let row of orderInProgress.listOrderItems">
+              <td class="screenResponsiveXS item" (click)="callBackItem(row.item)">
+                {{row.item.name}}<br>
+                <cite>{{((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100).toFixed(2)}}€</cite>
+              </td>
+              <td class="screenResponsive item">
+                <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(row.item)">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <h5 matLine class="myFont">{{row.item.name}}</h5>
+                  <cite matLine>référence : {{row.item.reference}}</cite>
+                  <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of row.item.colors"> - {{color.name}}</ng-container></span>
+                </mat-list-item></mat-list>
+              </td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsiveLarge alignRight">{{((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100).toFixed(2)}}€</td>
+              <td>{{row.qty}}</td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsive alignRight">{{(((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100)*row.qty).toFixed(2)}}€</td>
+            </tr>
+          </tbody>
+        </table>
+        <section class="facturationAddress">
+          <h6 class="myFont">Adresse de facturation :</h6>
+          <p>{{usersServices.getUser().street}}<br>{{usersServices.getUser().zipCode}} {{usersServices.getUser().city}}<br>{{usersServices.getUser().country}}</p>
+        </section>
+        <section class="deliveryAddress">
+          <h6 class="myFont">Adresse de livraison :</h6>
+          <p>{{orderInProgress.address}}</p>
+        </section>
+        <section class="paymentButtons">
+          <button mat-raised-button class="actionValid myFont" type="button">PAIEMENT CB</button>
+          <button mat-raised-button class="actionValid myFont" type="button">SIMULATION A CREDIT</button>
+          <button mat-raised-button class="actionValid myFont" type="button" [routerLink]="''">CONTINUER MES ACHATS</button>
+          <button mat-raised-button class="return myFont" type="button" (click)="caddyStep='firstStep'">RETOUR</button>
+        </section>
+      </ng-container>
     </div>
 
     <!-- step by default : the main display of caddy -->
     <div *ngSwitchDefault>
       <!-- Part 1 : to manage the display of order in progress -->
       <section class="order" *ngIf="statusConnexion">
-        <p class="anyOrder" *ngIf="!(orderInProgress.numberOrder)" style="text-align:center;">Aucune commande en cours.</p>
+        <p *ngIf="!(orderInProgress.numberOrder)" style="text-align:center;">Aucune commande en cours.</p>
+        <h5 *ngIf="(orderInProgress.numberOrder)" class="myFont">Votre commande en cours n°{{orderInProgress.numberOrder}} du :<br>{{orderInProgress.dateOfCreation | date: 'dd/MM/yyyy'}}</h5>
+        <!-- completed table about the order in progress -->
+        <table class="orderTable" *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">
+          <thead>
+            <tr>
+              <th>ARTICLE(S)</th>
+              <th class="screenResponsiveLarge price">PRIX</th>
+              <th [ngClass]="router.url == '/caddy' ? 'qty' : 'total'">QTE</th>
+              <th class="screenResponsive cost">TOTAL</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th colspan="3" class="screenResponsiveLarge alignRight myFont">montant global de la commande : </th>
+              <th colspan="2" class="screenResponsive footerTable alignRight myFont">montant global de la commande : </th>
+              <th colspan="1" class="screenResponsiveXS alignRight myFont">montant global de la commande : </th>
+              <th class="alignRight total">{{getTotalCost(orderInProgress.listOrderItems)}}€</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let row of orderInProgress.listOrderItems">
+              <td class="screenResponsiveXS item" (click)="callBackItem(row.item)">
+                {{row.item.name}}<br>
+                <cite>{{((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100).toFixed(2)}}€</cite>
+              </td>
+              <td class="screenResponsive item">
+                <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(row.item)">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <h5 matLine class="myFont">{{row.item.name}}</h5>
+                  <cite matLine>référence : {{row.item.reference}}</cite>
+                  <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of row.item.colors"> - {{color.name}}</ng-container></span>
+                </mat-list-item></mat-list>
+              </td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsiveLarge alignRight">{{((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100).toFixed(2)}}€</td>
+              <td>{{row.qty}}</td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsive alignRight">{{(((row.item.discountPrice ? row.item.discountPrice : row.item.price)/100)*row.qty).toFixed(2)}}€</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Resume of the order in progress for the view in pages categories & items -->
+        <table class="orderTableResume" *ngIf="(orderInProgress.numberOrder) && (router.url != '/caddy')">
+          <tr>
+            <td>{{getTotalItems(orderInProgress.listOrderItems)}} article(s) enregistré(s)</td>
+            <td class="cost">{{getTotalCost(orderInProgress.listOrderItems)}}€</td>
+          </tr>
+        </table>
+        <!-- Action for order in progress -->
+        <button mat-raised-button class="actionValid myFont" (click)="finishOrder()" type="button" *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">Finaliser ma commande</button><br *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">
         <a href="#" (click)="resetOrder($event)" *ngIf="(orderInProgress.numberOrder) && (router.url == '/caddy')">Annuler ma commande en cours</a>
         <a href="#" [routerLink]="'/caddy'" *ngIf="(orderInProgress.numberOrder) && (router.url != '/caddy')">Visualiser</a>
       </section>
@@ -34,43 +175,45 @@
               <th colspan=3 *ngIf="router.url == '/caddy'" class="screenResponsive footerTable alignRight myFont">montant global de votre panier : </th>
               <th colspan=2 *ngIf="router.url == '/caddy'" class="screenResponsiveXS alignRight myFont">montant global de votre panier : </th>
               <th colspan=2 class="alignRight myFont" *ngIf="router.url != '/caddy'">montant global de votre panier : </th>
-              <th class="alignRight total">{{getTotalCost(caddyInProgress)}}€</th></tr>
-            </tfoot>
-            <tbody>
-              <tr *ngFor="let line of caddyInProgress">
-                <td><i class="material-icons" (click)="deleteItem(line.item)">delete</i></td>
-                <td class="screenResponsiveXS item" (click)="callBackItem(line.item)">
-                  {{line.item.name}}<br>
-                  <cite>{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</cite>
-                  <cite *ngIf="line.qty > line.item.quantity" style="color:red;"><br>- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</cite>
-                </td>
-                <td class="screenResponsive item">
-                  <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(line.item)">
-                    <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{line.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
-                    <h5 matLine class="myFont">{{line.item.name}}</h5>
-                    <cite matLine>référence : {{line.item.reference}}</cite>
-                    <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of line.item.colors"> - {{color.name}}</ng-container></span>
-                  </mat-list-item></mat-list>
-                  <span *ngIf="line.qty > line.item.quantity" style="color:red;">- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</span>
-                </td>
-                <td *ngIf="router.url == '/caddy'" class="screenResponsiveLarge alignRight">{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</td>
-                <td>
-                  <input #quantity type="number" [min]=1 [max]="line.item.quantity" value="line.qty" [(ngModel)]="line.qty">
-                </td>
-                <td *ngIf="router.url == '/caddy'" class="screenResponsive alignRight">{{(((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100)*line.qty).toFixed(2)}}€</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <!-- Part 3 : actions buttons -->
-        <section class="actions">
-          <button mat-raised-button [ngClass]="router.url != '/caddy' ? 'actionValidView myFont' : 'actionValid myFont'" type="button" (click)="router.url != '/caddy' ? finishIt() : validationOfCaddy()" *ngIf="caddyInProgress.length > 0">
-            {{router.url != '/caddy'  ? 'Finaliser mon panier' : statusConnexion && orderInProgress ? 'Ajouter à la commande en cours' : 'Valider mon panier'}}
-          </button>
-          <button [ngClass]="router.url != '/caddy' ? 'actionContinueView myFont' : 'actionContinue myFont'" mat-raised-button type="button" [routerLink]="''" *ngIf="caddyInProgress.length > 0">Continuer mes achats</button>
-          <button [ngClass]="router.url != '/caddy' ? 'actionResetView myFont' : 'actionReset myFont'" mat-raised-button type="button" *ngIf="caddyInProgress.length > 0" (click)="resetCaddy()">Vider mon panier</button>
-          <button class="return myFont" mat-raised-button type="button" (click)="callBack()" *ngIf="router.url == '/caddy'">RETOUR</button>
-        </section>
-      </div>
-    </ng-container>
-  </div>
+              <th class="alignRight total">{{getTotalCost(caddyInProgress)}}€</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr *ngFor="let line of caddyInProgress">
+              <td><i class="material-icons" (click)="deleteItem(line.item)">delete</i></td>
+              <td class="screenResponsiveXS item" (click)="callBackItem(line.item)">
+                {{line.item.name}}<br>
+                <cite>{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</cite>
+                <cite *ngIf="line.qty > line.item.quantity" style="color:red;"><br>- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</cite>
+              </td>
+              <td class="screenResponsive item">
+                <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(line.item)">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{line.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <h5 matLine class="myFont">{{line.item.name}}</h5>
+                  <cite matLine>référence : {{line.item.reference}}</cite>
+                  <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of line.item.colors"> - {{color.name}}</ng-container></span>
+                </mat-list-item></mat-list>
+                <span *ngIf="line.qty > line.item.quantity" style="color:red;">- Attention ! - la quantité indiquée est supérieur à la quantité en stock.</span>
+              </td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsiveLarge alignRight">{{((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100).toFixed(2)}}€</td>
+              <td>
+                <input #quantity type="number" [min]=1 [max]="line.item.quantity" value="line.qty" [(ngModel)]="line.qty">
+              </td>
+              <td *ngIf="router.url == '/caddy'" class="screenResponsive alignRight">{{(((line.item.discountPrice ? line.item.discountPrice : line.item.price)/100)*line.qty).toFixed(2)}}€</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!-- Part 3 : actions buttons -->
+      <section [ngClass]="(router.url == '/caddy' && caddyInProgress.length <= 0) ? 'reduceActions' : 'actions'">
+        <button mat-raised-button [ngClass]="router.url != '/caddy' ? 'actionValidView myFont' : 'actionValid myFont'" type="button" (click)="router.url != '/caddy' ? finishIt() : validationOfCaddy()" *ngIf="caddyInProgress.length > 0">
+          {{router.url != '/caddy'  ? 'Finaliser mon panier' : statusConnexion && orderInProgress.numberOrder ? 'Ajouter à la commande en cours' : 'Valider mon panier'}}
+        </button>
+        <button [ngClass]="router.url != '/caddy' ? 'actionContinueView myFont' : 'actionContinue myFont'" mat-raised-button type="button" [routerLink]="''" *ngIf="router.url != '/'">{{caddyInProgress.length > 0 ? 'Continuer mes achats' : 'Effectuer des achats'}}</button>
+        <button [ngClass]="router.url != '/caddy' ? 'actionResetView myFont' : 'actionReset myFont'" mat-raised-button type="button" *ngIf="caddyInProgress.length > 0" (click)="resetCaddy()">Vider mon panier</button>
+        <button class="return myFont" mat-raised-button type="button" (click)="callBack()" *ngIf="router.url == '/caddy'">RETOUR</button>
+      </section>
+    </div>
+    <article class="error">{{errorMessage}}</article>
+  </ng-container>
+</div>

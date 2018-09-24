@@ -17,14 +17,14 @@
   height: 100%;
 }
 
-.actions {
+.actions, .paymentButtons {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-.actionValid, .actionContinue, .actionValidView, .actionContinueView {
+.actionValid, .actionContinue, .actionValidView, .actionContinueView, .confirmStreet {
   border: solid 1px #2da4c4;
   background: #2da4c4;
   color: #FAD796;
@@ -32,22 +32,26 @@
   margin: 5px 0px;
 }
 
-.actionValid:hover, .actionContinue:hover, .actionValidView:hover, .actionContinueView:hover {
+.actionValid:hover, .actionContinue:hover, .actionValidView:hover, .actionContinueView:hover, .confirmStreet:hover {
   background: #FAD796;
   color: black;
   border-color: #FAD796;
 }
 
-.actionReset, .actionResetView {
+.actionReset, .actionResetView, .updateStreet, .return {
   border: solid 1px black;
   width: 100%;
   margin: 5px 0px;
 }
 
-.actionReset:hover, .actionResetView:hover {
+.actionReset:hover, .actionResetView:hover, .updateStreet:hover, .return:hover {
   background: silver;
   color: white;
   border-color: silver;
+}
+
+.return {
+  width: 100px;
 }
 
 .caddy {
@@ -67,11 +71,19 @@
   overflow: hidden;
 }
 
-.caddyTable {
+.caddyTable, .orderTable, .orderTableResume {
   width: 100%;
   margin: auto;
   table-layout: fixed;
   text-align: center;
+}
+
+.orderTable, .orderTable tr, .orderTableResume, .orderTableResume tr {
+  border: solid 2px black;
+}
+
+.orderTable td, .orderTable th, .orderTableResume td {
+  border: solid 1px black;
 }
 
 .remove {
@@ -94,8 +106,77 @@
   display: none;
 }
 
-.anyOrder {
+.displayStreet {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.address, .buttonsStreet {
+  margin: 5px;
+}
+
+.address p {
+  border: solid 5px #FAD796;
+  width: 100%;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.address h5 {
+  text-decoration: underline;
+}
+
+.buttonsStreet {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.error {
+  white-space: pre-wrap;
+  color: red;
+  text-align: center;
+}
+
+.reduceActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addressForm{
+  width: 100%;
+  text-align: center;
+  border: solid 5px #FAD796;
+}
+
+.addressForm .full {
+  width: 100%;
+  padding: 5px;
+}
+
+.addressForm .halfFull{
+  width: 50%;
+  padding: 5px;
+}
+
+.addressForm .countrySelect {
+  width: 60%;
+  margin: auto;
+}
+
+.paymentPage {
+  padding: 10px
+}
+
+.facturationAddress h6, .deliveryAddress h6 {
   margin: 0px;
+}
+
+.facturationAddress, .deliveryAddress {
+  background: #FAD796;
+  white-space: pre-wrap;
+  margin: 10px 0px;
 }
 
 @media screen and (orientation: portrait) and (min-width: 768px) and (max-width:1023px) {
@@ -118,6 +199,14 @@
   .actionValid, .actionContinue, .actionReset {
     width: 30%;
   }
+
+  .confirmStreet, .updateStreet {
+    width: 48%;
+  }
+
+  .buttonsStreet {
+    flex-direction: row;
+  }
 }
 
 @media screen and (min-width:1024px) {
@@ -135,5 +224,14 @@
 
   .actionValid, .actionContinue, .actionReset {
     width: 32%;
+  }
+
+  .confirmStreet, .updateStreet {
+    width: 25%;
+  }
+
+  .buttonsStreet {
+    flex-direction: row;
+    justify-content: space-around;
   }
 }
