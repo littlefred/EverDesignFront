@@ -33,10 +33,11 @@ export class CaddyComponent implements OnInit {
   // instruction to control the formulaire to change order address
   updateStreet = new FormGroup({
     street: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_STREET),
-      Validators.pattern('[\'a-zA-Z0-9 ]*')]),
+      Validators.pattern('[\'a-zA-ZÀ-ÖØ-öø-ÿ0-9 -]*')]),
     zipCode: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_ZIPCODE),
-      Validators.pattern('[a-zA-Z0-9 ]*')]),
-    city: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_CITY), Validators.pattern('[\'a-zA-Z -]*')]),
+      Validators.pattern('[a-zA-Z0-9 -]*')]),
+    city: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_CITY),
+      Validators.pattern('[\'a-zA-ZÀ-ÖØ-öø-ÿ -]*')]),
     country: new FormControl(Countries.FRANCE, [Validators.required, Validators.maxLength(LengthDatas.DATA_COUNTRY), ValidateCountry])
   });
 

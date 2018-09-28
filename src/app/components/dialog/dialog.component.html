@@ -1,5 +1,6 @@
 <!-- we make a switch to manage the dialog display -->
 <section [ngSwitch]="data.view">
+
   <!-- this dialog when it's a diaporama -->
   <article *ngSwitchCase="'diapo'">
     <mat-dialog-content>
@@ -14,18 +15,35 @@
       <!--/.Carousel Wrapper-->
     </mat-dialog-content>
   </article>
-  <!-- this dialogue when we ask a cnofirm at user -->
+  <!-- End of diaporama -->
+
+  <!-- this dialog when we ask a confirm at user -->
   <article *ngSwitchCase="'removeConfirm'" style="text-align:center;">
     <h3 mat-dialog-title>Confirmation</h3>
     <mat-dialog-content>
-      <span *ngIf="!(data.update)">Voulez-vous vraiment supprimer :<br></span>
-      {{data.message}}
+      <p><span *ngIf="!(data.update)">Voulez-vous vraiment supprimer :<br></span>
+      {{data.message}}</p>
     </mat-dialog-content>
     <mat-dialog-actions align="center">
       <button mat-button mat-dialog-close>NON</button>
       <button mat-button [mat-dialog-close]="true" cdkFocusInitial>OUI</button>
     </mat-dialog-actions>
   </article>
+  <!-- End of user confirmation -->
+
+  <!-- this dialog when user made an inscription-->
+  <article *ngSwitchCase="'inscriptionIsDone'" style="text-align:center;">
+    <h3 mat-dialog-title>Inscription en cours</h3>
+    <mat-dialog-content>
+      <p>Merci pour votre demande d'inscription. Celle-ci reste valable <strong>24 heures</strong>.<br>
+      Pour valider définitivement votre compte client, merci de cliquer sur le bouton contenu dans le mail qui vient de vous être adressé.</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button mat-button (click)="inscriptionConfirmClose()" cdkFocusInitial>OK</button>
+    </mat-dialog-actions>
+  </article>
+  <!-- End of inscription user confirmation -->
+
   <!-- default : dialogue to do connexion -->
   <article *ngSwitchDefault class="cnxView">
     <form [formGroup]="cnxControl">
@@ -50,4 +68,6 @@
       </mat-dialog-actions>
     </form>
   </article>
+  <!-- End of default view -->
+
 </section>

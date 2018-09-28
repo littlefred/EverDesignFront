@@ -1,0 +1,20 @@
+<main class="page">
+  <!-- Display errorMessage -->
+  <article class="callback error" *ngIf="errorMessage != undefined"><p>{{errorMessage}}</p></article>
+
+  <!-- Display when account confirm is KO -->
+  <article *ngIf="callBackState == 'accountConfirmKO'" class="callback">
+    <p>Désolé votre demande d'inscription n'est plus valide.<br>
+    Merci de procéder à une nouvelle ouverture de compte.</p>
+    <button mat-raised-button type="button" [routerLink]="['/users']" class="buttonValue">Créer un compte</button>
+  </article>
+  <!-- End of account confirm KO -->
+
+  <!-- Display when account confirm is OK -->
+  <article *ngIf="callBackState == 'accountConfirmOK'" class="callback">
+    <p>Merci d'avoir validé votre inscription.<br>
+    Nous sommes heureux de vous compter parmi nous. N'hésitez pas à parcourir des à présent notre catalogue.</p>
+    <button mat-raised-button type="button" [routerLink]="['']" class="buttonValue">Notre catalogue</button>
+  </article>
+  <!-- End of account confirm OK -->
+</main>

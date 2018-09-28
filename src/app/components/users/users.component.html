@@ -1,10 +1,133 @@
+<!-- Display errorMessage -->
+<article class="error"><p>{{errorMessage}}</p></article>
+
 <!-- we make a switch to manage the user page display -->
 <section [ngSwitch]="userView">
+
   <!-- when user is connected, display your account -->
   <article *ngSwitchCase="'userAccount'"></article>
+
   <!-- default : account creation -->
   <article *ngSwitchDefault>
-    formulaire de creation de compte
+    <!-- form register -->
+    <form class="text-center border border-light p-5 accountForm" [formGroup]="accountOpening">
+      <p class="h4 mb-4">Formulaire d'inscription</p>
+      <!-- First part : personal informations -->
+      <fieldset>Vos données personnelles
+        <div class="form-row mb-2 dataForm">
+          <div class="col3">
+            <!-- Last name -->
+            <input type="text" id="name" class="form-control" placeholder="Votre nom" formControlName="lastName" required>
+            <mat-error *ngIf="accountOpening.get('lastName').touched && accountOpening.get('lastName').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('lastName').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('lastName').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="col3">
+            <!-- First name -->
+            <input type="text" class="form-control" placeholder="Votre prénom" formControlName="firstName" required>
+            <mat-error *ngIf="accountOpening.get('firstName').touched && accountOpening.get('firstName').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('firstName').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('firstName').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="col2">
+            <!-- Phone number -->
+            <input type="text" class="form-control" placeholder="Votre téléphone" formControlName="phone" required>
+            <mat-error *ngIf="accountOpening.get('phone').touched && accountOpening.get('phone').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('phone').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('phone').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <!-- date of birth -->
+          <div class="col2 birthDate">
+            <label for="birthDate" class="col-form-label">Votre date de naissance :</label>
+          </div>
+          <div class="col2 birthDate">
+            <input type="date" id="birthDate" class="form-control" placeholder="Votre date de naissance" formControlName="birthDate" required>
+            <mat-error *ngIf="accountOpening.get('birthDate').touched && accountOpening.get('birthDate').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('birthDate').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('birthDate').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <mat-error *ngIf="accountOpening.get('birthDate').touched && accountOpening.get('birthDate').hasError('majorityControl')">Désolé vous n'êtes pas majeur</mat-error>
+          </div>
+        </div>
+        <!-- Street-->
+        <input type="text" class="form-control mb-2 street" placeholder="Votre adresse" formControlName="street" required>
+        <mat-error *ngIf="accountOpening.get('street').touched && accountOpening.get('street').hasError('required')">la valeur du champ est obligatoire</mat-error>
+        <mat-error *ngIf="accountOpening.get('street').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+        <mat-error *ngIf="accountOpening.get('street').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+        <div class="form-row mb-5 dataForm">
+          <!-- zipCode-->
+          <div class="col3">
+            <input type="text" class="form-control" placeholder="Votre code postal" formControlName="zipCode" required>
+            <mat-error *ngIf="accountOpening.get('zipCode').touched && accountOpening.get('zipCode').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('zipCode').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('zipCode').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="col3">
+            <input type="text" class="form-control" placeholder="Votre ville" formControlName="city" required>
+            <mat-error *ngIf="accountOpening.get('city').touched && accountOpening.get('city').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('city').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('city').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="col2">
+            <select placeholder="Sélectionnez votre pays" class="form-control" formControlName="country" required>
+              <option *ngFor="let country of countries.values()" [value]="country">{{country}}</option>
+            </select>
+            <mat-error *ngIf="accountOpening.get('country').touched && accountOpening.get('country').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('country').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('country').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+        </div>
+      </fieldset>
+      <!-- Second part: mail @ password -->
+      <fieldset>Vos identifiants
+        <!-- E-mail -->
+        <div class="form-row mb-2 dataForm">
+          <div class="col3">
+            <input type="email" class="form-control" placeholder="Votre E-mail" formControlName="mail" required>
+            <mat-error *ngIf="accountOpening.get('mail').touched && accountOpening.get('mail').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail').hasError('email')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail').hasError('availableMail')">Cet e-mail est déjà utilisé</mat-error>
+          </div>
+          <div class="col3">
+            <input type="email" class="form-control" placeholder="Confirmez votre E-mail" formControlName="mail2" required>
+            <mat-error *ngIf="accountOpening.get('mail2').touched && accountOpening.get('mail2').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail2').hasError('email')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail2').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <mat-error *ngIf="accountOpening.get('mail2').touched && accountOpening.hasError('emailCompare')">le mail est différent</mat-error>
+          </div>
+        </div>
+        <!-- Password -->
+        <div class="form-row mb-3 dataForm">
+          <div class="col3">
+            <input type="password" class="form-control" placeholder="Votre mot de passe" formControlName="pwd" required>
+            <mat-error *ngIf="accountOpening.get('pwd').touched && accountOpening.get('pwd').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('pwd').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('pwd').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="col3">
+            <input type="password" class="form-control" placeholder="Confirmez votre mot de passe" formControlName="pwd2" required>
+            <mat-error *ngIf="accountOpening.get('pwd2').touched && accountOpening.get('pwd2').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="accountOpening.get('pwd2').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="accountOpening.get('pwd2').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <mat-error *ngIf="accountOpening.get('pwd2').touched && accountOpening.hasError('pwdCompare')">le mot de passe est différent</mat-error>
+          </div>
+        </div>
+      </fieldset>
+      <hr>
+      <!-- Terms of service -->
+      <div class="custom-checkbox">
+        <input class="custom-control-input" type="checkbox" id="CGV&ML" formControlName="agree">
+        <label for="CGV&ML" class="custom-control-label">En cochant
+          <em>la case</em> vous acceptez les
+          <a href="#" [routerLink]="'/informations/CGV'" target="_blank">conditions générales de vente (CGV)</a> et
+          <a href="#" [routerLink]="'/informations/ML'" target="_blank">les mentions légales (ML)</a>.
+        </label><br>
+        <mat-error *ngIf="accountOpening.get('agree').hasError('required')">Pour être client, merci d'accepter les CGV et les ML.</mat-error>
+      </div>
+      <!-- Sign up button -->
+      <button class="validButton" type="submit" [disabled]="!accountOpening.valid" (click)="openAccount(accountOpening.value)">Enregistrer</button><br>
+      <button mat-raised-button class="" type="button" (click)="goBack()">retour</button>
+    </form>
   </article>
 
 </section>

@@ -15,7 +15,7 @@ export class DialogComponent implements OnInit {
   // method to control login formulaire
   cnxControl = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(LengthDatas.DATA_MAIL)]),
-    pwd: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_PWD), Validators.pattern('[^"\'= ]*')])
+    pwd: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_PWD), Validators.pattern('[^"\'=!: ]*')])
   });
 
   constructor(public dialogRef: MatDialogRef<CaddyComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -45,7 +45,12 @@ export class DialogComponent implements OnInit {
     );
   }
 
-  // method call to close the dialogue
+  // method call to close the dialogue after inscription confirm message
+  public inscriptionConfirmClose(): void {
+    this.dialogRef.close('OK');
+  }
+
+  // method call to close the dialogue normally
   public close(): void {
     this.dialogRef.close();
   }

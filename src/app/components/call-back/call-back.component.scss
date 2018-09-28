@@ -1,0 +1,30 @@
+.page {
+  display: flex;
+  flex: column;
+  align-content: center;
+  padding: 20px 0px;
+}
+
+.callback {
+  max-width: 1000px;
+  text-align: center;
+  margin: auto;
+}
+
+.buttonValue {
+  background: #2da4c4;
+  border-color: #2da4c4;
+  color: #FAD796;
+  font-family: "myFont", Arial, sans-serif;
+}
+
+.buttonValue:hover {
+  background: #FAD796;
+  border-color: #FAD796;
+  color: black;
+}
+
+.error {
+  color: red;
+  white-space: pre-wrap;
+}

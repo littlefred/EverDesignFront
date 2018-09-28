@@ -24,6 +24,7 @@ import { CaddyComponent } from './components/caddy/caddy.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { UsersComponent } from './components/users/users.component';
+import { CallBackComponent } from './components/call-back/call-back.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UsersComponent } from './components/users/users.component';
     HeaderComponent,
     CaddyComponent,
     DialogComponent,
-    UsersComponent
+    UsersComponent,
+    CallBackComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,7 @@ import { UsersComponent } from './components/users/users.component';
   entryComponents: [
     DialogComponent
   ],
-  providers: [],
+  providers: [CallBackComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

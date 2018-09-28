@@ -7,5 +7,7 @@ export enum LengthDatas {
   DATA_COUNTRY = 100,
   DATA_PHONE = 15,
   DATA_MAIL = 100,
-  DATA_PWD = 25
+  DATA_PWD = 25,
+  DATE_BIRTHDATE = 10,
+  LEGAL_MAJORITY = 18
 }

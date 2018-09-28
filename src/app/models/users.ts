@@ -8,7 +8,7 @@ export class Users {
   public dateOfBirth?: Date;
   public mail?: string;
   public password?: string;
-  public phone?: number;
+  public phone?: string;
   public street?: string;
   public city?: string;
   public zipCode?: string;
@@ -17,7 +17,7 @@ export class Users {
   public dateOfCreation?: Date;
 
   constructor(id?: number, firstName?: string, lastName?: string, dateOfBirth?: Date,
-    mail?: string, password?: string, phone?: number, street?: string, city?: string, zipCode?: string,
+    mail?: string, password?: string, phone?: string, street?: string, city?: string, zipCode?: string,
     country?: Countries, position?: Positions) {
       this.id = id;
       this.firstName = firstName;

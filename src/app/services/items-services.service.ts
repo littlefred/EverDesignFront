@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { Items } from '../models/items';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
+import { Resolve, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ItemsServicesService {
+export class ItemsServicesService implements Resolve<number> {
   private errorMessage: string; // to manage error messages
   // attribut to save the backend address
   private readonly URL_ITEMS = environment.backEndUrl + '/items';
@@ -18,11 +19,11 @@ export class ItemsServicesService {
   // BehaviorSubject to manage the selection list
   private selectedListItems = new BehaviorSubject<Items[]>(new Array<Items>());
   // attribut to define the display of item component since navigation choice
-  private screenObs = new BehaviorSubject<string>('');
+  screenObs = new BehaviorSubject<string>('');
   // BehaviorSubject to define one item to display some details since navigation choice
   private seeItem = new BehaviorSubject<Items>(new Items());
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getAllItems().subscribe(
       (items: Items[]) => {
         this.initialGlobalListItems = items;
@@ -34,6 +35,16 @@ export class ItemsServicesService {
         if (error.status === 404) {this.errorMessage = 'erreur technique :\nDésolé, actuellement aucun article trouvé.'; }
       }
     );
+  }
+
+  // method Resolve that was implemented to manage the routeur link whitout good informations
+  resolve(): number {
+    if (this.categoryIdSelected !== -1) {
+      return this.categoryIdSelected;
+    } else {
+      this.router.navigate(['']);
+      return null;
+    }
   }
 
   // method to call backend and get all categories
@@ -73,7 +84,7 @@ export class ItemsServicesService {
     return this.selectedListItems;
   }
 
-  public getScreenObs(): Observable<string> {
+  public getScreenObs(): BehaviorSubject<string> {
     return this.screenObs;
   }
 

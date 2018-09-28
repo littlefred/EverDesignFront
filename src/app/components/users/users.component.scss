@@ -1,0 +1,58 @@
+.error {
+  color: red;
+  max-width: 1000px;
+  text-align: center;
+  margin: auto;
+  white-space: pre-wrap;
+}
+
+.col3, .col2 {
+  width: 100%;
+  margin: 5px 0px;
+}
+
+.validButton {
+  margin: 10px;
+  width: 200px;
+  background: #2da4c4;
+  border-color: #2da4c4;
+  color: #FAD796;
+  font-family: "myFont", Arial, sans-serif;
+}
+
+.validButton:hover {
+  background: #FAD796;
+  border-color: #FAD796;
+  color: black;
+}
+
+.validButton:disabled {
+  background: silver;
+  border-color: silver;
+  color: grey;
+}
+
+.dataForm {
+  justify-content: space-between;
+}
+
+.accountForm {
+  max-width: 1024px;
+  margin: auto;
+}
+
+@media screen and (orientation: landscape) {
+  .birthDate {
+    width: 45%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .col3 {
+    width: 48%;
+  }
+
+  .col2 {
+    width: 32%;
+  }
+}

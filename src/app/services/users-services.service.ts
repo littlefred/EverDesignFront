@@ -29,6 +29,11 @@ export class UsersServicesService {
     console.log('oubli de mot de passe: renvoi');
   }
 
+  // method to check that email is already used
+  public checkMail(email: string): Observable<any> {
+    return this.http.get(this.URL_USERS, {params: {mail: email}});
+  }
+
   // method to try to connect the user
   public authentification(mail: string, pwd: string): void {
     this.http.post(this.URL_USERS + '/cnx', {mail: mail, pwd: pwd}).subscribe(
@@ -48,12 +53,22 @@ export class UsersServicesService {
     );
   }
 
+  // method to open an account
+  public openAccount(user: Users): Observable<Users> {
+    return this.http.post(this.URL_USERS, user);
+  }
+
   // method to do deconnection of user
   public deconnection(): void {
     this.user = new Users();
     this.userConnected.next(false);
     this.router.navigateByUrl('');
     this.caddyServices.cleanOrderInProgress();
+  }
+
+  // method to check the callback mail conformity
+  public checkCallBack(userId: number, userMail: string): Observable<any> {
+    return this.http.get(this.URL_USERS + '/callBack', {params: {userId: userId.toFixed(), userMail: userMail}});
   }
 
   /**********************

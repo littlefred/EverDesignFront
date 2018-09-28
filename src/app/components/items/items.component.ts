@@ -90,13 +90,13 @@ export class ItemsComponent implements OnInit {
         this.errorMessage = 'erreur technique :\nNous ne pouvons pas déterminer le stock actuel de l\'article selectionné.';
       }
     );
-    this.screenItems = 'detailsItem';
+    this.itemsServices.setScreenObs('detailsItem');
   }
 
   // method to return to the list display
   public back(): void {
     this.errorMessage = '';
-    this.screenItems = '';
+    this.itemsServices.setScreenObs('');
   }
 
   // method to manage the paginator in list view (materialize)
