@@ -14,3 +14,7 @@ export enum Material {
   COMPOSITE = 'COMPOSITE',
   CONTREPLAQUE = 'CONTREPLAQUE'
 }
+
+export namespace Material {
+  export function values() {return Object.keys(Material).filter((type) => type !== 'values'); }
+}

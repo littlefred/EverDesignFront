@@ -38,7 +38,7 @@ position="end">
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Mon compte</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Mes commandes en cours</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion" class="noSelected">Historique de mes commandes</a>
-  <a mat-list-item href="#" (click)="cnxMenu.toggle()" *ngIf="statusConnexion && getUserPosition() && (userPosition === 'USER_ADMIN' || userPosition === 'USER_ADMIN2')" class="noSelected">Gestion administrative</a>
+  <a mat-list-item href="#" [routerLink]="'/admin'" (click)="cnxMenu.toggle()" *ngIf="statusConnexion && getUserPosition() && (userPosition === 'USER_ADMIN' || userPosition === 'USER_ADMIN2')" class="noSelected">Gestion administrative</a>
   <a mat-list-item href="#" (click)="cnxMenu.toggle() ; getDeconnection($event)" *ngIf="statusConnexion" class="noSelected">Deconnexion</a>
 </mat-nav-list>
 </mat-sidenav>

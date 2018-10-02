@@ -4,13 +4,17 @@
 <section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>
 <!-- body of page -->
 <div class="bodyItem">
+
   <!-- part 1 : main display of item component -->
   <!-- SwitchCase to display the page in 3 modes -->
   <section [ngSwitch]="screenItems" class="itemContent">
-    <!-- first switch : edition mode -->
+
+    <!-- first switch : edition mode that inclued component itemEdition -->
     <article *ngSwitchCase="'editionItem'">
-      edition d'article
+      <app-item-edition></app-item-edition>
     </article>
+    <!-- End of first switch : edition item -->
+
     <!-- Second switch : when an item have been selected, detail item mode -->
     <article *ngSwitchCase="'detailsItem'" class="detailsItem">
       <div class="picturesItem">
@@ -68,6 +72,8 @@
       </div>
       <button class="return myFont" mat-raised-button type="button" (click)="back()">retour</button>
     </article>
+    <!-- End of second switch : details item -->
+
     <!-- third switch : when a category have been selected, to display the item list -->
     <article *ngSwitchDefault class="listItems">
       <mat-paginator #paginator [length]="listItemsToDisplay.length" [pageSize]="6" *ngIf="pagingList && pagingList.length>0"
@@ -86,8 +92,10 @@
       </div>
     </article>
   </section>
+  <!-- end of third switch : list of items since a category selection -->
+
   <!-- part 2 : caddy view when the screen width >= 1024px -->
-  <section class="caddyView">
+  <section class="caddyView" *ngIf="screenItems !== 'editionItem'">
     <app-caddy></app-caddy>
   </section>
 </div>

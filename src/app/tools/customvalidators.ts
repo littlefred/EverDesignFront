@@ -1,3 +1,4 @@
+import { Material } from './material.enum';
 import { LengthDatas } from './length-datas.enum';
 import { Countries } from './countries.enum';
 import { AbstractControl } from '@angular/forms';
@@ -5,6 +6,14 @@ import { AbstractControl } from '@angular/forms';
 export function ValidateCountry(control: AbstractControl) {
   if (!Countries.values().includes(control.value)) {
     return { validCountry: true};
+  } else {
+    return null;
+  }
+}
+
+export function ValidateMaterial(control: AbstractControl) {
+  if (!Material.values().includes(control.value)) {
+    return { validMaterial: true};
   } else {
     return null;
   }

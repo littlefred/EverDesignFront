@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, Resolve } from '@angular/router';
 import { CaddyServicesService } from './caddy-services.service';
 import { Positions } from './../tools/positions.enum';
 import { Injectable } from '@angular/core';
@@ -10,7 +10,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersServicesService {
+export class UsersServicesService implements Resolve<boolean> {
   // attribut to save the backend address
   private readonly URL_USERS = environment.backEndUrl + '/users';
   // BehaviorSubject to follow the connection of user
@@ -22,6 +22,16 @@ export class UsersServicesService {
 
   constructor(private http: HttpClient, private caddyServices: CaddyServicesService, private router: Router) {
     this.userConnected.subscribe((value) => {this.connectionState.next(value); });
+  }
+
+  // method Resolve that was implemented to manage the routeur link whitout good informations
+  resolve(): boolean {
+    if (this.userConnected.getValue() === true && (this.user.position === 'USER_ADMIN' || this.user.position === 'USER_ADMIN2')) {
+      return true;
+    } else {
+      this.router.navigate(['']);
+      return false;
+    }
   }
 
   // method to ask a new passowrd when user forgot it

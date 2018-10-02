@@ -6,9 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Countries } from '../../tools/countries.enum';
 import { LengthDatas } from '../../tools/length-datas.enum';
 import { ValidateCountry, ValidateEmailCompare, ValidatePasswordCompare, ValidateAge } from '../../tools/customvalidators';
-import { Observable } from 'rxjs';
 import { Users } from '../../models/users';
-import { Alert } from 'selenium-webdriver';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 
@@ -88,7 +86,7 @@ export class UsersComponent implements OnInit {
         if (result) {
           const dialogRef = this.dialog.open(DialogComponent, {data : {view: 'inscriptionIsDone'}});
           dialogRef.afterClosed().subscribe((back) => {
-            if (back === 'OK') {this.location.back(); console.log('back'); }
+            if (back === 'OK') {this.location.back(); }
           });
         }
       },

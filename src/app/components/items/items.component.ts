@@ -53,7 +53,7 @@ export class ItemsComponent implements OnInit {
       (items: Items[]) => {
         this.pagingList = new Array<Items>();
         this.listItemsToDisplay = items.sort((a, b) => a.name.localeCompare(b.name));
-        if (this.listItemsToDisplay.length === 0) {
+        if (this.listItemsToDisplay.length === 0 && this.itemsServices.getCategoryIdSelected() > 0) {
           this.errorMessage = 'Désolé, aucun article trouvé.';
         } else {
           this.errorMessage = '';

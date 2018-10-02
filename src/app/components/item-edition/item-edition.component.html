@@ -1,0 +1,104 @@
+<main>
+  <!-- form to edit an item -->
+  <form [formGroup]="editionForm" class="border border-light p-5">
+    <p class="h4 mb-4">Edition d'un article</p>
+
+    <!-- Part 1 : identity of item -->
+    <div class="itemEdit">
+      <div class="identityEdit">
+        <div class="itemCategory form-row mb-2">
+          <i class="material-icons" (click)="addCategory($event)">create</i>
+          <label for="category" class="myFont col-form-label">catégorie de l'article : </label>
+          <select id="category" class="browser-default" formControlName="category" required>
+            <option value="" disabled selected>Choisissez la catégorie</option>
+            <option *ngFor="let cat of categoriesList" [ngValue]="cat">{{cat.name}}</option>
+          </select>
+        </div>
+
+        <fieldset><span class="myFont">Données de l'article :</span>
+          <div class="itemData" class="form-row mb-2">
+            <input type="text" class="form-control" placeholder="Saisir le nom" formControlName="name" required>
+            <mat-error *ngIf="editionForm.get('name').touched && editionForm.get('name').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="editionForm.get('name').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="editionForm.get('name').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <input type="text" class="form-control" placeholder="Saisir le code produit" formControlName="itemNumber" required>
+            <mat-error *ngIf="editionForm.get('itemNumber').touched && editionForm.get('itemNumber').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="editionForm.get('itemNumber').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="editionForm.get('itemNumber').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+          <div class="itemPrices">
+            <input type="number" min=0 max=999999.99 step="0.01" placeholder="Saisir le prix" formControlName="price" required>€
+            <mat-error *ngIf="editionForm.get('price').touched && editionForm.get('price').hasError('required')">la valeur du champ est obligatoire</mat-error>
+            <mat-error *ngIf="editionForm.get('price').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="editionForm.get('price').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+            <input type="number" min=0 max=999999.99 step="0.01" placeholder="Saisir le prix promo" formControlName="discountPrice">€
+            <mat-error *ngIf="editionForm.get('discountPrice').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+            <mat-error *ngIf="editionForm.get('discountPrice').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+          </div>
+        </fieldset>
+
+        <fieldset><i class="material-icons" (click)="createMaterial($event)">create</i> <span class="myFont">Composition :</span>
+          <div formArrayName="colors">
+            <div class="itemColors form-row mb-2" *ngFor="let colorControl of getColors().controls; let i = index">
+              <select (change)="selectedMaterial(i, $event)">
+                <option value="" disabled selected>Choisissez la matière</option>
+                <option *ngFor="let material of materialList" [value]="material">{{material}}</option>
+              </select>
+              <select class="browser-default" [formControlName]="i" required>
+                <option value="" disabled selected>Choisissez le matériaux</option>
+                <option *ngFor="let color of selectedList[i]" [ngValue]="color">{{color.name}}</option>
+              </select>
+              <i class="material-icons" (click)="removeColor(i, $event)" *ngIf="i > 0">remove_circle_outline</i>
+            </div>
+            <i class="material-icons" (click)="addColors($event)">add_circle_outline</i>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="quantityItem form-row mb-2">
+        <label for="qty" class="myFont col-form-label">Quantité en stock :</label><br/>
+        <cite>(champ optionel : par défaut le stock sera 0)</cite>
+        <input type="number" min=0 id="qty" placeholder="quantité" class="form-control" formControlName="qty">
+        <mat-error *ngIf="editionForm.get('qty').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+        <mat-error *ngIf="editionForm.get('qty').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+      </div>
+    </div>
+    <!-- end of part 1 : identity item -->
+
+    <!-- Part 2 : pictures edition -->
+    <!--<div class="picturesEdit">
+      <div class="mainPic">
+        <input type="file" placeholder="sélectionner la photo principale" formControlName="mainPic" required>
+      </div>
+      <div class="albumItem">
+        <input type="file" placeholder="sélectionner une photo supplémentaire" formControlName="addPic">
+      </div>
+    </div>-->
+    <!-- End of part 2 : pictures edition -->
+
+    <!-- Part 3 : technical informations of item -->
+    <div class="technicalInformationsItem" class="form-row mb-2">
+      <label for="technicalInformations" class="myFont">Informations techniques :</label>
+      <textarea class="form-control" id="technicalInformations" placeholder="Merci de notifier les détails techniques du produit" formControlName="technicalInformations" required></textarea>
+      <mat-error *ngIf="editionForm.get('technicalInformations').touched && editionForm.get('technicalInformations').hasError('required')">la valeur du champ est obligatoire</mat-error>
+      <mat-error *ngIf="editionForm.get('technicalInformations').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+      <mat-error *ngIf="editionForm.get('technicalInformations').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+    </div>
+    <!-- End of part 3 : technical informations -->
+
+    <!-- Part 4 : description informations of item -->
+    <div class="descriptionItem" class="form-row mb-2">
+      <label for="description" class="myFont">Description :</label><br>
+      <cite>(champ optionel)</cite>
+      <textarea class="form-control" id="description" placeholder="Ajouter une description du produit" formControlName="description"></textarea>
+      <mat-error *ngIf="editionForm.get('description').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+      <mat-error *ngIf="editionForm.get('description').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+    </div>
+    <!-- End of part 4 : description informations -->
+
+    <!-- Part 5 : action buttons of form -->
+    <button class="myFont" mat-raised-button type="button" [disabled]="!editionForm.valid" (click)="saveItem(editionForm.value)">Enregistrer</button>
+    <!-- end of part 5 : action buttons -->
+  </form>
+  <!-- end of edition item form -->
+</main>

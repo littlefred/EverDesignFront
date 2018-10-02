@@ -182,7 +182,6 @@ export class CaddyComponent implements OnInit {
     e.preventDefault();
     this.caddyServices.deletedOrderInProgress(this.usersServices.getUser().id).subscribe(
       (result) => {
-        console.log(result);
         if (result) {
           this.caddyServices.getOrderInProgressBeforePaid(this.usersServices.getUser().id);
         }
@@ -265,7 +264,6 @@ export class CaddyComponent implements OnInit {
         + user.country;
       this.orderInProgress.listOrderItems = this.caddyInProgress;
     } else {
-      console.log('old order');
       this.caddyInProgress.forEach((e) => {this.orderInProgress.listOrderItems.push(e); });
       this.orderInProgress.dateOfStep = new Date();
     }

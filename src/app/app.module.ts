@@ -11,7 +11,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
   MatTableModule,
   MatDialogModule,
   MatSnackBarModule,
-  MatBadgeModule} from '@angular/material';
+  MatBadgeModule,
+  MatExpansionModule} from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { UsersComponent } from './components/users/users.component';
 import { CallBackComponent } from './components/call-back/call-back.component';
+import { AdminManageComponent } from './components/admin-manage/admin-manage.component';
+import { ItemEditionComponent } from './components/item-edition/item-edition.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { CallBackComponent } from './components/call-back/call-back.component';
     CaddyComponent,
     DialogComponent,
     UsersComponent,
-    CallBackComponent
+    CallBackComponent,
+    AdminManageComponent,
+    ItemEditionComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,8 @@ import { CallBackComponent } from './components/call-back/call-back.component';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatExpansionModule
   ],
   entryComponents: [
     DialogComponent

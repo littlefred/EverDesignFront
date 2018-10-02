@@ -1,7 +1,8 @@
 <div [ngClass]="router.url == '/caddy' ? 'pageBody' : 'pageBodyView'">
   <!-- Switch according to the validation steps of caddy -->
   <ng-container [ngSwitch]="caddyStep">
-    <!-- Step to chack the delivery address -->
+
+    <!-- Step to check the delivery address -->
     <div *ngSwitchCase="'firstStep'">
       <section class="displayStreet">
         <article class="address" *ngIf="!isEditable">
@@ -40,6 +41,7 @@
         </article>
       </section>
     </div>
+    <!-- end of step check address -->
 
     <!-- Step to pay order -->
     <div *ngSwitchCase="'secondStep'" class="paymentPage">
@@ -91,13 +93,14 @@
           <p>{{orderInProgress.address}}</p>
         </section>
         <section class="paymentButtons">
-          <button mat-raised-button class="actionValid myFont" type="button">PAIEMENT CB</button>
-          <button mat-raised-button class="actionValid myFont" type="button">SIMULATION A CREDIT</button>
+          <button mat-raised-button class="actionValid myFont" type="button" disabled="true">PAIEMENT CB</button>
+          <button mat-raised-button class="actionValid myFont" type="button" disabled="true">SIMULATION A CREDIT</button>
           <button mat-raised-button class="actionValid myFont" type="button" [routerLink]="''">CONTINUER MES ACHATS</button>
           <button mat-raised-button class="return myFont" type="button" (click)="caddyStep='firstStep'">RETOUR</button>
         </section>
       </ng-container>
     </div>
+    <!-- end of step to pay order -->
 
     <!-- step by default : the main display of caddy -->
     <div *ngSwitchDefault>
@@ -214,6 +217,8 @@
         <button class="return myFont" mat-raised-button type="button" (click)="callBack()" *ngIf="router.url == '/caddy'">RETOUR</button>
       </section>
     </div>
+    <!-- end of default part -->
+
     <article class="error">{{errorMessage}}</article>
   </ng-container>
 </div>

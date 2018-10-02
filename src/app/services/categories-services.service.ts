@@ -3,6 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Colors } from '../models/colors';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,11 @@ export class CategoriesServicesService {
     // method to call backend and get all categories
     private getAllCategories(): Observable<Categories[]> {
       return this.http.get<Categories[]>(this.URL_CATEGORIES);
+    }
+
+    // method to get all colors for items
+    public getAllColors(): Observable<Colors[]> {
+      return this.http.get<Colors[]>(this.URL_CATEGORIES + '/colors');
     }
 
     /**********************

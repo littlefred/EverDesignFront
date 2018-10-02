@@ -8,4 +8,5 @@ export class Categories {
     this.name = name;
     this.image = image;
   }
+
 }

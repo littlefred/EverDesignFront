@@ -1,3 +1,5 @@
+import { UsersServicesService } from './services/users-services.service';
+import { AdminManageComponent } from './components/admin-manage/admin-manage.component';
 import { CallBackComponent } from './components/call-back/call-back.component';
 import { ItemsServicesService } from './services/items-services.service';
 import { UsersComponent } from './components/users/users.component';
@@ -17,6 +19,7 @@ const routes: Routes = [
   {path: 'informations/ML', component: InformationsComponent},
   {path: 'users', component: UsersComponent},
   {path: 'account', component: CallBackComponent, resolve: {callBackInformation: CallBackComponent}},
+  {path: 'admin', component: AdminManageComponent, resolve: {checkConnection: UsersServicesService}},
   {path: '', component: CategoriesComponent},
   {path: '**', redirectTo: ''}
 ];

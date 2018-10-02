@@ -1,0 +1,36 @@
+<main>
+  <!-- part to display admin menu -->
+  <mat-accordion>
+
+    <!-- Menu to manage item -->
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          ARTICLES
+        </mat-panel-title>
+        <mat-panel-description class="description">
+          Ajout, modification et suppression
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ul>
+        <li><a href="#" [routerLink]="['/items']" (click)="addItem()">Editer un nouvel article</a></li>
+      </ul>
+    </mat-expansion-panel>
+    <!-- end of menu item -->
+
+    <!-- menu to manage categories -->
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          CATEGORIES
+        </mat-panel-title>
+        <mat-panel-description class="description">
+          Ajout, modification et suppression
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>gestion</p>
+    </mat-expansion-panel>
+    <!-- end of menu categories -->
+  </mat-accordion>
+  <!-- end of admin menu part -->
+</main>
