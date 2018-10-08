@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Items } from '../models/items';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -55,6 +55,18 @@ export class ItemsServicesService implements Resolve<number> {
   // method to check the stock of an item
   public getStock(idItem: number): Observable<number> {
     return this.http.get<number>(this.URL_ITEMS + '/stock/' + idItem);
+  }
+
+  // method to send a request to upload files of new item(s)
+  sendPics(formdata: FormData): Observable<HttpEvent<{}>> {
+    const req = new HttpRequest('POST', this.URL_ITEMS + '/upload', formdata, {reportProgress: true});
+    return this.http.request(req);
+  }
+
+  // method to send a request to save new item(s)
+  sendItems(items: Items[]): Observable<HttpEvent<{}>> {
+    const req = new HttpRequest('POST', this.URL_ITEMS + '/new', items, {reportProgress: true});
+    return this.http.request(req);
   }
 
   /**********************

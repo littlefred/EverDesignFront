@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Images } from '../../models/images';
 import { DialogComponent } from '../dialog/dialog.component';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-items',
@@ -14,6 +15,8 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit {
+  pathPics = environment.srcUrlItemsPics; // path to get pictures of items
+  pathColors = environment.srcUrlColorsPics; // path to get pictures of colors
   // formControl to manage the disable action in select option
   disableSelect = new FormControl(false);
   // to manage error messages
@@ -127,7 +130,21 @@ export class ItemsComponent implements OnInit {
 
   // method to choice a same item withanother color
   public changeColor(item: Items): void {
-    this.itemDetails = item;
+    this.stockItem = 0; // initialisation
+    this.image = ''; // initialisation
+    this.itemsServices.setSeeItem(item);
+    this.pagingAlbum = this.itemDetails.listImagesOfItem.slice(0, Math.min(this.ALBUM_SIZE, this.itemDetails.listImagesOfItem.length));
+    this.numberPage = 0;
+    this.itemsServices.getStock(this.itemDetails.id).subscribe(
+      (stock) => {
+        this.stockItem = stock;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        this.errorMessage = 'erreur technique :\nNous ne pouvons pas déterminer le stock actuel de l\'article selectionné.';
+      }
+    );
+    this.itemsServices.setScreenObs('detailsItem');
   }
 
   // method to select next page of album

@@ -12,7 +12,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
   MatDialogModule,
   MatSnackBarModule,
   MatBadgeModule,
-  MatExpansionModule} from '@angular/material';
+  MatExpansionModule,
+  MatProgressBarModule} from '@angular/material';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MainNavComponent } from 'src/app/components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -70,7 +71,8 @@ import { ItemEditionComponent } from './components/item-edition/item-edition.com
     ReactiveFormsModule,
     MatSnackBarModule,
     MatBadgeModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     DialogComponent

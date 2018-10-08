@@ -52,6 +52,8 @@ export class UsersServicesService implements Resolve<boolean> {
           this.userConnected.next(true);
           this.user = value;
           this.caddyServices.getOrderInProgressBeforePaid(this.user.id);
+        } else {
+          this.userConnected.next(false);
         }
       },
       (error: HttpErrorResponse) => {
@@ -65,7 +67,7 @@ export class UsersServicesService implements Resolve<boolean> {
 
   // method to open an account
   public openAccount(user: Users): Observable<Users> {
-    return this.http.post(this.URL_USERS, user);
+    return this.http.post(this.URL_USERS, user, {reportProgress: true});
   }
 
   // method to do deconnection of user

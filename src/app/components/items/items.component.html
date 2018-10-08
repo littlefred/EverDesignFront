@@ -19,12 +19,12 @@
     <article *ngSwitchCase="'detailsItem'" class="detailsItem">
       <div class="picturesItem">
         <div class="mainPic">
-          <img src="../../../assets/imagesArticles/{{image ? image : itemDetails.listImagesOfItem[0].image}}" (click)="openDialog()" alt="photo de l'article {{itemDetails.name}}">
+          <img src="{{pathPics + (image ? image : itemDetails.listImagesOfItem[0].image)}}" (click)="openDialog()" alt="photo de l'article {{itemDetails.name}}">
         </div>
         <div *ngIf="itemDetails.listImagesOfItem.length>1" class="albumItem">
           <i class="material-icons {{numberPage >=1 ? '' : 'desactive'}}" (click)="numberPage >=1 ? nextPic(numberPage - 1) : ''">arrow_back_ios</i>
           <div class="albumPic" *ngFor="let img of pagingAlbum" >
-            <img #imageItem src="../../../assets/imagesArticles/{{img.image}}" (click)="image = img.image"
+            <img #imageItem src="{{pathPics + img.image}}" (click)="image = img.image"
             alt="photo {{itemDetails.listImagesOfItem.indexOf(img)}} de l'article {{itemDetails.name}}">
           </div>
           <i class="material-icons {{(itemDetails.listImagesOfItem.length / ALBUM_SIZE >= 1) && (numberPage < maxPage()) ? '' : 'desactive'}}" (click)="(itemDetails.listImagesOfItem.length / ALBUM_SIZE >= 1) && (numberPage < maxPage()) ? nextPic(numberPage + 1) : ''">arrow_forward_ios</i>
@@ -41,12 +41,12 @@
             <h6>rèf : {{itemDetails.reference}}</h6>
             <p class="myFont">modèle actuel :</p>
             <ul>
-              <li *ngFor="let color of itemDetails.colors">{{color.name}} <img src="../../../assets/ImagesColors/{{color.sticker}}" width="15px"></li>
+              <li *ngFor="let color of itemDetails.colors">{{color.name}} <img src="{{pathColors + color.sticker}}" width="15px"></li>
             </ul>
             <mat-form-field *ngIf="getOptionColors(itemDetails.reference).length > 0" class="myFont">
               <mat-select placeholder="autre(s) coloris disponible(s)">
                 <mat-option *ngFor="let item of getOptionColors(itemDetails.reference)" (click)="changeColor(item)" class="myFont">
-                  - <span *ngFor="let color of item.colors">{{color.name}} <img src="../../../assets/ImagesColors/{{color.sticker}}" width="25px"> - </span>
+                  - <span *ngFor="let color of item.colors">{{color.name}} <img src="{{pathColors + color.sticker}}" width="25px"> - </span>
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -81,7 +81,7 @@
       </mat-paginator>
       <div *ngFor="let item of pagingList" [ngClass]="'itemCard'" (click)="selectedItem(listItemsToDisplay.indexOf(item), $event)">
         <div class="imageCard">
-          <img src="../../../assets/imagesArticles/{{item.listImagesOfItem[0].image}}" alt="photo de l'article {{item.name}}">
+          <img src="{{pathPics + item.listImagesOfItem[0].image}}" alt="photo de l'article {{item.name}}">
         </div>
         <div class="identityCard">
           <h4 class="myFont">{{item.name}}</h4>

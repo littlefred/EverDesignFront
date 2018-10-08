@@ -4,6 +4,7 @@ import { CaddyComponent } from './../caddy/caddy.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-dialog',
@@ -11,6 +12,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent implements OnInit {
+  pathPics = environment.srcUrlItemsPics; // path to get pictures of items
   errorlogin: string; // attribut to note the error message for a connexion
   // method to control login formulaire
   cnxControl = new FormGroup({

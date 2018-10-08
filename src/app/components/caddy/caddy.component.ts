@@ -94,7 +94,7 @@ export class CaddyComponent implements OnInit {
 
   // method to validate a caddy
   public validationOfCaddy(): void {
-    if (this.statusConnexion) {
+    if (this.statusConnexion && this.usersServices.getUser().position !== 'USER_NOVALID') {
       this.makeOrder();
       this.caddyServices.saveCaddy(this.orderInProgress).subscribe(
         (result: Orders) => {

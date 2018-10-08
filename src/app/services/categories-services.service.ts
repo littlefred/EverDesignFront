@@ -40,6 +40,10 @@ export class CategoriesServicesService {
       return this.http.get<Colors[]>(this.URL_CATEGORIES + '/colors');
     }
 
+    /*getLoadingPic(fileName: string) {
+      return this.http.get(this.URL_CATEGORIES + '/loading/' + fileName);
+    }*/
+
     /**********************
     **********************
     * GETTERS AND SETTERS

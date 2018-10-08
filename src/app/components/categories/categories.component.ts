@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { CategoriesServicesService } from './../../services/categories-services.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class CategoriesComponent implements OnInit {
   errorMessage: string; // to manage error messages
   categories: Categories[]; // to keep the list of all categories
+  pathPics = environment.srcUrlCategoriesPics; // path to get pictures of categories
 
   constructor(private categoriesServices: CategoriesServicesService, public router: Router, private itemsServices: ItemsServicesService) {}
 
@@ -33,5 +35,9 @@ export class CategoriesComponent implements OnInit {
     this.itemsServices.setCategoryIdSelected(id);
     this.router.navigateByUrl('/items');
   }
+
+  /*uploadPic(fileName: string) {
+    this.categoriesServices.getLoadingPic(fileName);
+  }*/
 
 }
