@@ -24,6 +24,8 @@ export class ItemEditionComponent implements OnInit {
   errorMessage: string;
   // attribut to get the list of categories
   categoriesList: Categories[];
+  // attribut to get category if there was a choice
+  categorySelected: Categories;
   // management of material list
   private orderedMaterialList = Material.values().sort((a, b) => a.localeCompare(b)); // attribut to list Material values in alphabetic name
   materialList = this.orderedMaterialList;
@@ -58,11 +60,17 @@ export class ItemEditionComponent implements OnInit {
   });
 
   constructor(private categoriesServices: CategoriesServicesService, private dialog: MatDialog,
-    private formBuilder: FormBuilder, private itemsServices: ItemsServicesService, private location: Location, private router: Router) { }
+    private formBuilder: FormBuilder, private itemsServices: ItemsServicesService, private location: Location, private router: Router) {}
 
   ngOnInit() {
     this.categoriesServices.getCategoriesList().subscribe(
-      (result: Categories[]) => {this.categoriesList = result; }
+      (result: Categories[]) => {
+        this.categoriesList = result;
+        if (this.categoriesList !== undefined && this.itemsServices.getCategoryIdSelected() !== 0) {
+          this.categorySelected = this.categoriesList.find(c => c.id === this.itemsServices.getCategoryIdSelected());
+          this.editionForm.get('category').setValue(this.categorySelected);
+        }
+      }
     );
     this.categoriesServices.getAllColors().subscribe(
       (result) => {this.colorsGlobalList = result; },

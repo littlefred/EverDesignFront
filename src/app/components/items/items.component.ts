@@ -1,3 +1,4 @@
+import { UsersServicesService } from './../../services/users-services.service';
 import { CaddyServicesService } from './../../services/caddy-services.service';
 import { Items } from './../../models/items';
 import { ItemsServicesService } from './../../services/items-services.service';
@@ -8,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Images } from '../../models/images';
 import { DialogComponent } from '../dialog/dialog.component';
 import { environment } from '../../../environments/environment.prod';
+import { Positions } from '../../tools/positions.enum';
 
 @Component({
   selector: 'app-items',
@@ -15,6 +17,8 @@ import { environment } from '../../../environments/environment.prod';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit {
+  statusConnexion: boolean; // attribut to follow the user connection
+  userPosition: Positions; // attribut to know the user position
   pathPics = environment.srcUrlItemsPics; // path to get pictures of items
   pathColors = environment.srcUrlColorsPics; // path to get pictures of colors
   // formControl to manage the disable action in select option
@@ -41,7 +45,7 @@ export class ItemsComponent implements OnInit {
   stockItem: number;
 
   constructor(private itemsServices: ItemsServicesService, private caddyServices: CaddyServicesService,
-    private dialog: MatDialog, private snackBar: MatSnackBar) {}
+    private dialog: MatDialog, private snackBar: MatSnackBar, private usersServices: UsersServicesService) {}
 
   ngOnInit() {
     this.errorMessage = this.itemsServices.getErrorMessage();
@@ -74,6 +78,26 @@ export class ItemsComponent implements OnInit {
         }
       }
     );
+    // method to follow the user connexion
+    this.usersServices.getConnexion().subscribe(
+      (value) => {this.statusConnexion = value; }
+    );
+  }
+
+  // method to get the user position when he's connected
+  public getUserPosition(): boolean {
+    if (this.statusConnexion) {
+      this.userPosition = this.usersServices.getUser().position;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // method to add an item
+  addItem(): void {
+    // this.itemsServices.setCategoryIdSelected(id);
+    this.itemsServices.setScreenObs('editionItem');
   }
 
   // method to save the item selected, change view of component and check the stock about it

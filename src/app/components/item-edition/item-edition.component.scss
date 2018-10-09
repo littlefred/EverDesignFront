@@ -1,3 +1,116 @@
 .myFont {
   font-family: "myFont", Arial, sans-serif;
 }
+
+main {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  text-align: center;
+}
+
+.editionForm {
+  margin: auto;
+  padding: 3px;
+  max-width: 1000px;
+}
+
+.itemEdit, .technicalInformationsItem, .descriptionItem, .composition {
+  background: #2da4c4;
+  padding: 5px;
+}
+
+.technicalInformationsItem, .descriptionItem {
+  text-align: left;
+  padding: 5px;
+}
+
+.technicalInformationsItem textarea, .descriptionItem textarea {
+  width: 100%;
+  height: 150px;
+}
+
+.itemDataBorder, .CompoElement {
+  border: 2px black solid;
+  padding: 2px;
+  width: 100%;
+}
+
+.itemCategory, .itemData, .itemPrices, .quantityItem, .colorsBorder, .picsBorder {
+  background: #FAD796;
+  margin: 5px;
+  padding: 5px;
+}
+
+.itemData {
+  justify-content: space-around;
+}
+
+.itemCategory, .quantityItem {
+  width: 100%;
+}
+
+.colorsBorder, .picsBorder {
+  text-align: left;
+}
+
+.buttonStyle {
+  border-radius: 15px 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.itemPrices input, .quantityItem input {
+  width: 110px;
+}
+
+.CompoElement select, .CompoElement input {
+  margin: 0px 5px;
+  width: 95%;
+}
+
+.itemCategory select {
+  margin: auto
+}
+
+.updateCompo, .buttonStyle {
+  background: silver;
+  border: silver;
+  color: black;
+}
+
+.updateCompo:hover, .buttonStyle:hover {
+  background: grey;
+  border: grey;
+}
+
+.sendButton {
+  background: #2da4c4;
+  border: #2da4c4;
+  color: #FAD796;
+}
+
+.sendButton:hover {
+  background: #FAD796;
+  border: #FAD796;
+  color: black;
+}
+
+@media screen and (min-width: 768px) {
+  .column, .itemCategory select, .CompoElement select {
+    width: 47%;
+  }
+
+  .itemPrices {
+    width: 48%;
+  }
+
+  .itemData input:first-of-type {
+    width: 69%;
+  }
+
+  .itemData input:last-of-type {
+    width: 30%;
+  }
+
+}

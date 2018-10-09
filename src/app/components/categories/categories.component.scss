@@ -77,6 +77,12 @@
   display: none;
 }
 
+.button {
+  position: relative;
+  bottom: 50px;
+  z-index: 10000;
+}
+
 @media screen and (orientation: landscape) {
   .catCard {
     width: 45%;
