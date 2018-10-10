@@ -4,6 +4,9 @@
 <div class="pageContent">
   <section class="catSection">
     <section *ngIf="errorMessage"><h2 class="error">{{errorMessage}}</h2></section>
+    <section class="admin"><button mat-raised-button type="button" (click)="addCategory($event)"
+      *ngIf="statusConnexion && getUserPosition() && (userPosition === 'USER_ADMIN' || userPosition === 'USER_ADMIN2')">Ajouter une catégorie</button>
+    </section>
     <article *ngFor="let cat of categories" class="catCard">
       <div class="avatar">
         <div><img src="{{pathPics + cat.image}}" alt="photo de la rubrique {{cat.name}}" [title]="cat.name"></div>

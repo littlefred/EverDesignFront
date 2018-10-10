@@ -32,28 +32,66 @@
 
   <!-- this dialog to add a category -->
   <article *ngSwitchCase="'addCategory'">
-    <h3 mat-dialog-title>Nouvelle catégorie :</h3>
+    <h3 mat-dialog-title style="text-align:center;" class="myFont">Nouvelle catégorie</h3>
     <mat-dialog-content>
-      <p>Ajout d'une catégorie</p>
+      <form [formGroup]="editionCat">
+        <div class="form-row mb-2">
+          <label for="cat" class="myFont col-form-label">nom de la catégorie :</label>
+          <input type="text" id="cat" class="form-control" formControlName="name" required>
+          <mat-error *ngIf="editionCat.get('name').touched && editionCat.get('name').getError('required')">champ obligatoire</mat-error>
+          <mat-error *ngIf="editionCat.get('name').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+          <mat-error *ngIf="editionCat.get('name').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+        </div>
+        <div class="form-row mb-2">
+          <label for="pic" class="myFont col-form-label">illustration de la catégorie :</label>
+          <input type="file" id="pic" class="form-control" (change)="selectPic($event, 'editionCat')" formControlName="pic" accept="image/*" required>
+          <mat-error *ngIf="editionCat.get('pic').touched && editionCat.get('pic').getError('required')">selection obligatoire</mat-error>
+          <mat-error *ngIf="editionCat.get('pic').touched && editionCat.get('pic').getError('formatPic')">format incorrect (autorisés: png et jpeg)</mat-error>
+          <mat-error *ngIf="editionCat.get('pic').touched && editionCat.get('pic').getError('sizeControl')">fichier trop lourd (maximum: 2MB)</mat-error>
+        </div>
+      </form>
     </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button mat-dialog-close type="button">Annuler</button>
-      <button mat-button type="button">Enregistrer</button>
+    <mat-dialog-actions align="center">
+      <button mat-raised-button mat-dialog-close type="button" class="myFont">Annuler</button>
+      <button mat-raised-button type="button" class="myFont" [disabled]="!editionCat.valid || sendAction" (click)="sendCat(editionCat.value)">Enregistrer</button>
     </mat-dialog-actions>
   </article>
   <!-- end of add category dialog-->
 
   <!-- this dialog to create a new material -->
   <article *ngSwitchCase="'createMaterial'">
-      <h3 mat-dialog-title>Nouveau matériaux :</h3>
-      <mat-dialog-content>
-        <p>Ajout d'un matériaux</p>
-      </mat-dialog-content>
-      <mat-dialog-actions>
-        <button mat-button mat-dialog-close type="button">Annuler</button>
-        <button mat-button type="button">Enregistrer</button>
-      </mat-dialog-actions>
-    </article>
+    <h3 mat-dialog-title style="text-align:center;" class="myFont">Nouveau matériaux</h3>
+    <mat-dialog-content>
+      <form [formGroup]="editionMat">
+        <div class="form-row mb-2">
+          <label for="mat" class="myFont col-form-label">matière :</label>
+          <select id="mat" class="form-control" formControlName="material">
+            <option value="" disabled selected>Choisissez</option>
+            <option *ngFor="let material of materialList" [ngValue]="material">{{material}}</option>
+          </select>
+          <mat-error *ngIf="editionMat.get('material').touched && editionMat.get('material').getError('required')">selection obligatoire</mat-error>
+        </div>
+        <div class="form-row mb-2">
+          <label for="material" class="myFont col-form-label">nom du matériaux :</label>
+          <input type="text" id="material" class="form-control" formControlName="name" required>
+          <mat-error *ngIf="editionMat.get('name').touched && editionMat.get('name').getError('required')">champ obligatoire</mat-error>
+          <mat-error *ngIf="editionMat.get('name').hasError('pattern')">la valeur du champ a un format incorrect</mat-error>
+          <mat-error *ngIf="editionMat.get('name').hasError('maxlength')">la valeur du champ est trop longue</mat-error>
+        </div>
+        <div class="form-row mb-2">
+          <label for="pic" class="myFont col-form-label">illustration du matériaux :</label>
+          <input type="file" id="pic" class="form-control" (change)="selectPic($event, 'editionMat')" formControlName="pic" accept="image/*" required>
+          <mat-error *ngIf="editionMat.get('pic').touched && editionMat.get('pic').getError('required')">selection obligatoire</mat-error>
+          <mat-error *ngIf="editionMat.get('pic').touched && editionMat.get('pic').getError('formatPic')">format incorrect (autorisés: png et jpeg)</mat-error>
+          <mat-error *ngIf="editionMat.get('pic').touched && editionMat.get('pic').getError('sizeControl')">fichier trop lourd (maximum: 2MB)</mat-error>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <button mat-button mat-dialog-close type="button" class="myFont">Annuler</button>
+      <button mat-button type="button" class="myFont" [disabled]="!editionMat.valid || sendAction" (click)="sendMaterial(editionMat.value)">Enregistrer</button>
+    </mat-dialog-actions>
+  </article>
   <!-- End of create material part -->
 
   <!-- this dialog when we ask a confirm at user -->

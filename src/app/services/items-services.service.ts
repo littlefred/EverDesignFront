@@ -4,6 +4,7 @@ import { Items } from '../models/items';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { Resolve, Router } from '@angular/router';
+import { Colors } from '../models/colors';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class ItemsServicesService implements Resolve<number> {
   }
 
   // method to call backend and get all categories
-  private getAllItems(): Observable<Items[]> {
+  public getAllItems(): Observable<Items[]> {
     return this.http.get<Items[]>(this.URL_ITEMS);
   }
 
@@ -63,9 +64,21 @@ export class ItemsServicesService implements Resolve<number> {
     return this.http.request(req);
   }
 
+  // method to send a request to upload one file only
+  sendPic(formdata: FormData): Observable<HttpEvent<{}>> {
+    const req = new HttpRequest('POST', this.URL_ITEMS + '/uploadColors', formdata, {reportProgress: true});
+    return this.http.request(req);
+  }
+
   // method to send a request to save new item(s)
   sendItems(items: Items[]): Observable<HttpEvent<{}>> {
     const req = new HttpRequest('POST', this.URL_ITEMS + '/new', items, {reportProgress: true});
+    return this.http.request(req);
+  }
+
+  // method to send a request to save new item(s)
+  sendMaterial(material: Colors): Observable<HttpEvent<{}>> {
+    const req = new HttpRequest('POST', this.URL_ITEMS + '/newColors', material, {reportProgress: true});
     return this.http.request(req);
   }
 
@@ -90,6 +103,10 @@ export class ItemsServicesService implements Resolve<number> {
 
   public getInitialGlobalListItems(): Items[] {
     return this.initialGlobalListItems;
+  }
+
+  public setInitialGlobalListItems(items: Items[]): void {
+    this.initialGlobalListItems = items;
   }
 
   public getSelectedListItems(): Observable<Items[]> {

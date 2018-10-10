@@ -28,9 +28,28 @@
           Ajout, modification et suppression
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>gestion</p>
+      <ul>
+        <li><a href="#" (click)="addCategory($event)">Editer une nouvelle catégorie</a></li>
+      </ul>
     </mat-expansion-panel>
     <!-- end of menu categories -->
+
+    <!-- menu to manage categories -->
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            MATERIAUX
+          </mat-panel-title>
+          <mat-panel-description class="description">
+            Ajout, modification et suppression
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ul>
+          <li><a href="#" (click)="addMaterial($event)">Editer un nouveau matériaux</a></li>
+        </ul>
+      </mat-expansion-panel>
+      <!-- end of menu categories -->
+
   </mat-accordion>
   <!-- end of admin menu part -->
 </main>

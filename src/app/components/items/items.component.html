@@ -76,7 +76,7 @@
 
     <!-- third switch : when a category have been selected, to display the item list -->
     <article *ngSwitchDefault class="listItems">
-      <button class="button" mat-raised-button type="button" (click)="addItem()"
+      <button mat-raised-button type="button" (click)="addItem()"
       [routerLink]="['/items']" *ngIf="statusConnexion && getUserPosition() && (userPosition === 'USER_ADMIN' || userPosition === 'USER_ADMIN2')">Ajouter un article dans la catégorie</button>
       <mat-paginator #paginator [length]="listItemsToDisplay.length" [pageSize]="6" *ngIf="pagingList && pagingList.length>0"
         [showFirstLastButtons]="true" (click)="movePage(paginator)">

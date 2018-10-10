@@ -2,7 +2,7 @@ import { Categories } from './../models/categories';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Colors } from '../models/colors';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class CategoriesServicesService {
     }
 
     // method to call backend and get all categories
-    private getAllCategories(): Observable<Categories[]> {
+    public getAllCategories(): Observable<Categories[]> {
       return this.http.get<Categories[]>(this.URL_CATEGORIES);
     }
 
@@ -40,9 +40,17 @@ export class CategoriesServicesService {
       return this.http.get<Colors[]>(this.URL_CATEGORIES + '/colors');
     }
 
-    /*getLoadingPic(fileName: string) {
-      return this.http.get(this.URL_CATEGORIES + '/loading/' + fileName);
-    }*/
+    // method to send a request to upload file of new category
+    sendPic(formdata: FormData): Observable<HttpEvent<{}>> {
+      const req = new HttpRequest('POST', this.URL_CATEGORIES + '/upload', formdata, {reportProgress: true});
+      return this.http.request(req);
+    }
+
+    // method to send a request to save new item(s)
+    sendCategory(cat: Categories): Observable<HttpEvent<{}>> {
+      const req = new HttpRequest('POST', this.URL_CATEGORIES + '/new', cat, {reportProgress: true});
+      return this.http.request(req);
+    }
 
     /**********************
     **********************
@@ -52,6 +60,10 @@ export class CategoriesServicesService {
 
     public getCategoriesList(): Observable<Categories[]> {
       return this.categoriesList;
+    }
+
+    public setCategoriesList(categoriesList: Categories[]): void {
+      this.categoriesList.next(categoriesList);
     }
 
     public getErrorMessage(): string {

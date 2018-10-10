@@ -7,6 +7,8 @@ import { Categories } from 'src/app/models/categories';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Positions } from '../../tools/positions.enum';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -21,7 +23,8 @@ export class CategoriesComponent implements OnInit {
   userPosition: Positions;
 
   constructor(private categoriesServices: CategoriesServicesService, public router: Router,
-    private itemsServices: ItemsServicesService, private usersServices: UsersServicesService) {}
+    private itemsServices: ItemsServicesService, private usersServices: UsersServicesService,
+    private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.categoriesServices.getCategoriesList().subscribe(
@@ -60,6 +63,21 @@ export class CategoriesComponent implements OnInit {
   addItem(id: number): void {
     this.itemsServices.setCategoryIdSelected(id);
     this.itemsServices.setScreenObs('editionItem');
+  }
+
+  // method to add a category
+  addCategory(e: Event): void {
+    e.preventDefault();
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        view: 'addCategory'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open('Votre catégorie a bien été créée', '', {duration: 2000});
+      }
+    });
   }
 
 }

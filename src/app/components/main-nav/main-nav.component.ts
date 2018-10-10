@@ -48,6 +48,8 @@ export class MainNavComponent {
 
   // method when user go out of catalog (home or contact)
   public resetCategories(): void {
+    this.itemsServices.getAllItems().subscribe((result) => {this.itemsServices.setInitialGlobalListItems(result); });
+    this.categoriesServices.getAllCategories().subscribe((result) => {this.categoriesServices.setCategoriesList(result); });
     this.itemsServices.setCategoryIdSelected(-1);
   }
 
