@@ -41,6 +41,21 @@
   margin: auto;
 }
 
+.description {
+  display: none;
+}
+
+.contentMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.userAccount {
+  max-width: 600px;
+  margin: auto;
+}
+
 @media screen and (orientation: landscape) {
   .birthDate {
     width: 45%;
@@ -54,5 +69,9 @@
 
   .col2 {
     width: 32%;
+  }
+
+  .description {
+    display: initial;
   }
 }

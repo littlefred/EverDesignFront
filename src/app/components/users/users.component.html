@@ -4,8 +4,58 @@
 <!-- we make a switch to manage the user page display -->
 <section [ngSwitch]="userView">
 
-  <!-- when user is connected, display your account -->
-  <article *ngSwitchCase="'userAccount'"></article>
+  <!-- when user is connected, display your account to manage personal informations -->
+  <article *ngSwitchCase="'userAccount'" class="userAccount">
+    <!-- display basic information -->
+    <h4></h4>
+    <cite></cite>
+    <mat-accordion>
+      <!-- manage address -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Mon adresse</mat-panel-title>
+          <mat-panel-description class="description">modifier les données</mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="contentMenu">
+          <p>{{user?.street}}<br>{{user?.zipCode}} {{user?.city}}<br>{{user?.country}}</p>
+          <p class="material-icons">create</p>
+        </div>
+      </mat-expansion-panel>
+      <!-- end of address management -->
+
+      <!-- manage phone & email -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Mes coordonnées</mat-panel-title>
+          <mat-panel-description class="description">téléphone & adresse mail</mat-panel-description>
+        </mat-expansion-panel-header>
+        <ul>
+          <li>Modifier le téléphone</li>
+          <li>Modifier le mail</li>
+        </ul>
+      </mat-expansion-panel>
+      <!-- end of phone & email management -->
+
+      <!-- manage password -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Mon mot de passe</mat-panel-title>
+          <mat-panel-description class="description">modifier la valeur</mat-panel-description>
+        </mat-expansion-panel-header>
+        <form>
+          <label>Votre ancien mot de passe : </label>
+          <input type="password">
+          <label>Votre nouveau mot de passe : </label>
+          <input type="password">
+          <label>Confirmez votre nouveau mot de passe : </label>
+          <input type="password">
+          <button type="button">sauvegarder</button>
+        </form>
+      </mat-expansion-panel>
+      <!-- end of password management -->
+    </mat-accordion>
+  </article>
+  <!-- end of personal data management part -->
 
   <!-- default : account creation -->
   <article *ngSwitchDefault>
@@ -125,7 +175,7 @@
         <mat-error *ngIf="accountOpening.get('agree').hasError('required')">Pour être client, merci d'accepter les CGV et les ML.</mat-error>
       </div>
       <!-- Sign up button -->
-      <button class="validButton" type="submit" [disabled]="!accountOpening.valid" (click)="openAccount(accountOpening.value)">Enregistrer</button><br>
+      <button class="validButton" type="submit" [disabled]="!accountOpening.valid || sendAction" (click)="openAccount(accountOpening.value)">Enregistrer</button><br>
       <button mat-raised-button class="" type="button" (click)="goBack()">retour</button>
     </form>
   </article>

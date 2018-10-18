@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { Categories } from './../../models/categories';
 import { HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
@@ -8,7 +7,7 @@ import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@ang
 import { Component, OnInit } from '@angular/core';
 import { Items } from '../../models/items';
 import { LengthDatas } from '../../tools/length-datas.enum';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Colors } from '../../models/colors';
 import { Images } from '../../models/images';
@@ -31,14 +30,16 @@ export class ItemEditionComponent implements OnInit {
   materialList = this.orderedMaterialList;
   // attribut to get global list of colors
   colorsGlobalList: Colors[];
+  // attribut to follow if a send action is in progress
+  sendAction = false;
+  // attribut to follow the progression of uploading files & saving items
+  progress: { percentage: number } = { percentage: 0 };
   // attribut to get selected list since material choice
   selectedList: Colors[][][] = new Array(new Array(new Array()));
   // list to save the selection of pictures
   selectedPics: {key: string, files: File}[][] = new Array(new Array());
   // formData to prepare upload files in request http
   formdata = new FormData();
-  // attribut to follow the progression of uploading files & saving items
-  progress: { percentage: number } = { percentage: 0 };
   // Form controls for the edition form
   editionForm = new FormGroup({
     category: new FormControl('', [Validators.required]),
@@ -60,7 +61,8 @@ export class ItemEditionComponent implements OnInit {
   });
 
   constructor(private categoriesServices: CategoriesServicesService, private dialog: MatDialog,
-    private formBuilder: FormBuilder, private itemsServices: ItemsServicesService, private location: Location, private router: Router) {}
+    private formBuilder: FormBuilder, private itemsServices: ItemsServicesService,
+    private location: Location, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.categoriesServices.getCategoriesList().subscribe(
@@ -191,15 +193,22 @@ export class ItemEditionComponent implements OnInit {
   // method to create a new material
   createMaterial(e: Event): void {
     e.preventDefault();
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         view: 'createMaterial'
       }
+    });
+    dialogRef.afterClosed().subscribe((response) => {
+      this.categoriesServices.getAllColors().subscribe(
+        (result) => {this.colorsGlobalList = result; },
+        (error: HttpErrorResponse) => {if (error) {this.errorMessage = 'Erreur technique: pas de matériaux disponible.'; }}
+      );
     });
   }
 
   // method to save a item in DB
   saveItem(values): void {
+    this.sendAction = true;
     const items: Items[] = new Array();
     let c = 0;
     this.getComposition().controls.forEach(compo => {
@@ -262,6 +271,13 @@ export class ItemEditionComponent implements OnInit {
             this.progress.percentage = Math.round(100 * event2.loaded / event2.total);
           } else if (event2 instanceof HttpResponse) {
             console.log('item(s) is/are saved');
+            this.snackBar.open('Votre article a bien été ajouté', '', {
+              duration: 5000,
+              verticalPosition: 'top',
+              panelClass: ['snackbar']
+            });
+            this.itemsServices.getAllItems().subscribe((result) => {this.itemsServices.setInitialGlobalListItems(result); });
+            this.sendAction = false;
             this.location.back();
           }
         });

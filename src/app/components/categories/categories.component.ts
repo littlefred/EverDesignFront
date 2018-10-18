@@ -4,7 +4,6 @@ import { ItemsServicesService } from './../../services/items-services.service';
 import { CategoriesServicesService } from './../../services/categories-services.service';
 import { Component, OnInit } from '@angular/core';
 import { Categories } from 'src/app/models/categories';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Positions } from '../../tools/positions.enum';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -74,8 +73,13 @@ export class CategoriesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.snackBar.open('Votre catégorie a bien été créée', '', {duration: 2000});
+      if (result === 'okSvg' ) {
+        // alert('Votre catégorie a bien été créée');
+        this.snackBar.open('Votre catégorie a bien été créée', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: ['snackbar']
+        });
       }
     });
   }

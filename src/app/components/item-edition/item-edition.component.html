@@ -119,7 +119,7 @@
       <!-- End of part 4 : composition & pics-->
 
       <!-- Part 5 : action buttons of form -->
-      <button class="myFont sendButton" mat-raised-button type="button" [disabled]="!editionForm.valid || (progress.percentage > 0 && progress.percentage < 100)" (click)="saveItem(editionForm.value)">Enregistrer</button>
+      <button class="myFont sendButton" mat-raised-button type="button" [disabled]="!editionForm.valid || (progress.percentage > 0 && progress.percentage < 100 || sendAction)" (click)="saveItem(editionForm.value)">Enregistrer</button>
       <!-- end of part 5 : action buttons -->
     </form>
     <!-- end of edition item form -->

@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidateCountry } from '../../tools/customvalidators';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-caddy',
@@ -23,6 +24,7 @@ import { ValidateCountry } from '../../tools/customvalidators';
 })
 export class CaddyComponent implements OnInit {
   errorMessage: string; // attribut to save error message
+  pathPics = environment.srcUrlItemsPics; // path to get pictures of categories
   orderInProgress: Orders; // attribut to manage a user order in progress
   caddyInProgress: OrdersContent[]; // attribut to manage user purchases
   statusConnexion: boolean; // to know if user is connected

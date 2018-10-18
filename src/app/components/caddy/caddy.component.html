@@ -72,7 +72,7 @@
               </td>
               <td class="screenResponsive item">
                 <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(row.item)">
-                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="{{pathPics + row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
                   <h5 matLine class="myFont">{{row.item.name}}</h5>
                   <cite matLine>référence : {{row.item.reference}}</cite>
                   <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of row.item.colors"> - {{color.name}}</ng-container></span>
@@ -134,7 +134,7 @@
               </td>
               <td class="screenResponsive item">
                 <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(row.item)">
-                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="{{pathPics + row.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
                   <h5 matLine class="myFont">{{row.item.name}}</h5>
                   <cite matLine>référence : {{row.item.reference}}</cite>
                   <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of row.item.colors"> - {{color.name}}</ng-container></span>
@@ -191,7 +191,7 @@
               </td>
               <td class="screenResponsive item">
                 <mat-list ><mat-list-item [routerLink]="'/items'" (click)="callBackItem(line.item)">
-                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="../../../assets/imagesArticles/{{line.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
+                  <img matLine matListAvatar *ngIf="router.url == '/caddy'" src="{{pathPics + line.item.listImagesOfItem[0].image}}" alt="image de l\'article'">
                   <h5 matLine class="myFont">{{line.item.name}}</h5>
                   <cite matLine>référence : {{line.item.reference}}</cite>
                   <span matLine *ngIf="router.url == '/caddy'"><ng-container *ngFor="let color of line.item.colors"> - {{color.name}}</ng-container></span>

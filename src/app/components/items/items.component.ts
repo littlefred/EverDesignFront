@@ -4,7 +4,6 @@ import { Items } from './../../models/items';
 import { ItemsServicesService } from './../../services/items-services.service';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent, MatDialog, MatSnackBar } from '@angular/material';
-import { FormControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Images } from '../../models/images';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -22,7 +21,7 @@ export class ItemsComponent implements OnInit {
   pathPics = environment.srcUrlItemsPics; // path to get pictures of items
   pathColors = environment.srcUrlColorsPics; // path to get pictures of colors
   // formControl to manage the disable action in select option
-  disableSelect = new FormControl(false);
+  // disableSelect = new FormControl(false);
   // to manage error messages
   errorMessage: string;
   // attribut to save the list of items selection
@@ -96,7 +95,6 @@ export class ItemsComponent implements OnInit {
 
   // method to add an item
   addItem(): void {
-    // this.itemsServices.setCategoryIdSelected(id);
     this.itemsServices.setScreenObs('editionItem');
   }
 
@@ -148,7 +146,11 @@ export class ItemsComponent implements OnInit {
     } else {
       this.errorMessage = '';
       this.caddyServices.updateCaddy(item, qty);
-      this.snackBar.open('Votre article a bien été ajouté au panier', '', {duration: 2000});
+      this.snackBar.open('Votre article a bien été ajouté au panier', '', {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: ['snackbar']
+      });
     }
   }
 

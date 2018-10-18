@@ -32,10 +32,18 @@ export class AdminManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'erreurSvg') {
-        this.snackBar.open('Erreur lors de l\'enregistrement de la catégorie', '', {duration: 4000});
+        this.snackBar.open('Erreur lors de l\'enregistrement de la catégorie', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: ['snackbarError']
+        });
       }
       if (result === 'okSvg') {
-        this.snackBar.open('Votre catégorie a bien été créée', '', {duration: 2000});
+        this.snackBar.open('Votre catégorie a bien été créée', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: ['snackbar']
+        });
       }
     });
   }
@@ -50,10 +58,18 @@ export class AdminManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'erreurSvg') {
-        this.snackBar.open('Erreur lors de l\'enregistrement du matériaux', '', {duration: 4000});
+        this.snackBar.open('Erreur lors de l\'enregistrement du matériaux', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: ['snackbarError']
+        });
       }
       if (result === 'okSvg') {
-        this.snackBar.open('Votre matériaux a bien été créé', '', {duration: 2000});
+        this.snackBar.open('Votre matériaux a bien été créé', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: ['snackbar']
+        });
       }
     });
   }

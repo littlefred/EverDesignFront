@@ -49,9 +49,9 @@ export class UsersServicesService implements Resolve<boolean> {
     this.http.post(this.URL_USERS + '/cnx', {mail: mail, pwd: pwd}).subscribe(
       (value: Users) => {
         if (value.position !== Positions.USER_NOVALID) {
-          this.userConnected.next(true);
           this.user = value;
           this.caddyServices.getOrderInProgressBeforePaid(this.user.id);
+          this.userConnected.next(true);
         } else {
           this.userConnected.next(false);
         }

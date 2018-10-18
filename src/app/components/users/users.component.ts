@@ -19,8 +19,12 @@ export class UsersComponent implements OnInit {
   errorMessage: string; // attribut to get some error messages
   // attribut to manage the display of page user
   userView: string;
+  // attribut to get user informations
+  user: Users;
   // list of enumeration Countries
   countries = Countries;
+  // attribut to follow if a send action is in progress
+  sendAction = false;
   // FormGroup to manage the controls of account opening
   accountOpening = new FormGroup({
     lastName: new FormControl('', [Validators.required, Validators.maxLength(LengthDatas.DATA_LASTNAME),
@@ -52,6 +56,13 @@ export class UsersComponent implements OnInit {
   constructor(private location: Location, private usersServices: UsersServicesService, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.usersServices.getConnexion().subscribe((result) => {
+      if (result === true) {
+        this.userView = 'userAccount';
+        this.user = this.usersServices.getUser();
+        console.log('TOTO');
+      }
+    });
   }
 
   // method to check that email is already used
@@ -69,6 +80,7 @@ export class UsersComponent implements OnInit {
 
   // method to open an account
   openAccount(values): void {
+    this.sendAction = true;
     const tempUser = new Users();
     tempUser.lastName = values.lastName.toUpperCase();
     tempUser.firstName = values.firstName.charAt(0).toUpperCase() + values.firstName.substring(1).toLowerCase();
@@ -85,12 +97,16 @@ export class UsersComponent implements OnInit {
       (result) => {
         if (result) {
           const dialogRef = this.dialog.open(DialogComponent, {data : {view: 'inscriptionIsDone'}});
+          this.sendAction = false;
           dialogRef.afterClosed().subscribe((back) => {
-            if (back === 'OK') {this.location.back(); }
+            if (back === 'OK') {
+              this.location.back();
+            }
           });
         }
       },
       (error: HttpErrorResponse) => {
+        this.sendAction = false;
         if (error.status === 400) {
           this.errorMessage = 'Désolé, votre demande n\'a pas pu être traitée.\nMerci de la renouveller ultérieurement.';
         } else {

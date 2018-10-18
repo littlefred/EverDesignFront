@@ -138,10 +138,10 @@ export class DialogComponent implements OnInit {
         } else {
           this.categoriesServices.sendCategory(catToSaved).subscribe(event2 => {
             if (event2 instanceof HttpResponse) {
+              this.sendAction = false;
               const newCat: Categories = event2.body;
               if (newCat.id !== undefined) {
                 console.log('category is saved');
-                this.sendAction = false;
                 this.categoriesServices.getAllCategories().subscribe((result) => {this.categoriesServices.setCategoriesList(result); });
                 this.dialogRef.close('okSvg');
               } else {
@@ -178,10 +178,10 @@ export class DialogComponent implements OnInit {
         } else {
           this.itemsServices.sendMaterial(materialToSave).subscribe(event2 => {
             if (event2 instanceof HttpResponse) {
+              this.sendAction = false;
               const newMaterial: Colors = event2.body;
               if (newMaterial.id !== undefined) {
                 console.log('material is saved');
-                this.sendAction = false;
                 this.dialogRef.close('okSvg');
               } else {
                 this.dialogRef.close('erreurSvg');
